@@ -1,3 +1,5 @@
+# Taken from https://www.youtube.com/watch?v=vzozlM-5Hq8
+
 solana --version
 #solana-cli 1.6.4
 
