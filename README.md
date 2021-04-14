@@ -3,6 +3,7 @@
 Hope this will be helpful for me and others
 
 Validators registration - https://solana.com/validator-registration
+
 VERY usefull videos about starting Solana node - https://www.youtube.com/c/DimAn_io/videos
 
 
@@ -48,6 +49,8 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
 WantedBy=multi-user.target
 ```
+
+
 **With ramdisk**
 
 ```
