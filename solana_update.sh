@@ -3,6 +3,9 @@
 solana --version
 #solana-cli 1.6.4
 
+solana-install update
+# Update successful to 1.6.6
+
 solana slot
 # 71876724
 
