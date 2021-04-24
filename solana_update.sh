@@ -10,7 +10,7 @@ solana slot
 # 71876724
 
 # try to find free space to reload service while not generating block by or node - 4P8
-solana leader-schedule | grep 4P8 | grep 7187 
+solana leader-schedule -u localhost | grep 4P8 | grep 7187 
 # 7187 = first 4 counts of block #
 
 # look through snapshot close to current slot # 
