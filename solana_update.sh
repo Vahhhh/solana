@@ -6,7 +6,7 @@ solana --version && solana slot && solana-install update
 # installed
 
 # try to find free space to reload service while not generating block
-solana leader-schedule -u localhost | grep 4P8 | grep $(solana slot | cut -c 1-4)
+solana leader-schedule -u localhost | grep $(solana address) | grep $(solana slot | cut -c 1-4)
 
 # look through snapshot close to current slot #
 #ls -la /root/solana/ledger/snapshot*tar*
