@@ -117,7 +117,7 @@ echo '/dev/vg01/solana /root/solana   ext4    defaults                0 0' >> /e
 `mkdir -p /root/solana && mount /dev/vg01/solana`
 
 ##### Mount /mnt/swapfile to RAID0
-`mkdir -p /mnt/swapfile && mount /dev/vg01/swapfile`
+`mkdir -p /mnt/swap && mount /dev/vg01/swapfile`
 
 ##### Making speed test
 ```
@@ -164,15 +164,15 @@ Total      | 3.11 GB/s     (6.0k) | 3.37 GB/s     (3.2k)
 ### create swapfile
 ```
 swapoff -a
-dd if=/dev/zero of=/mnt/swapfile bs=1G count=128
-chmod 600 /mnt/swapfile
-mkswap /mnt/swapfile
-swapon /mnt/swapfile
+dd if=/dev/zero of=/mnt/swap/swapfile bs=1G count=128
+chmod 600 /mnt/swap/swapfile
+mkswap /mnt/swap/swapfile
+swapon /mnt/swap/swapfile
 ```
 
 ### add to /etc/fstab
 ```
-cat '/mnt/swapfile none swap sw 0 0' >> /etc/fstab
+cat '/mnt/swap/swapfile none swap sw 0 0' >> /etc/fstab
 ```
 
 ## ramdisk
