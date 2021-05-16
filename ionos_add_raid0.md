@@ -104,13 +104,16 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 pvcreate /dev/md5
 vgcreate vg01 /dev/md5
 lvcreate -L 1T -n solana vg01
-lvcreate -L 128G -n swapfile vg01
+lvcreate -L 128G -n swap vg01
 mkfs.ext4 /dev/vg01/solana
+mkfs.ext4 /dev/vg01/swap
 ```
 
 ##### Save mount info to /etc/fstab
 ```
-echo '/dev/vg01/solana /root/solana   ext4    defaults                0 0' >> /etc/fstab' >> /etc/fstab
+echo '/dev/vg01/solana /root/solana   ext4    defaults                0 0' >> /etc/fstab'
+echo '/dev/vg01/swap   /root/swap     ext4    defaults                0 0' >> /etc/fstab'
+
 ```
 
 ##### Mount /root/solana to RAID0
@@ -161,6 +164,14 @@ Total      | 3.11 GB/s     (6.0k) | 3.37 GB/s     (3.2k)
 
 
 ## swapfile
+
+### add swap to /etc/fstab
+```
+mkdir -p /mnt/swap
+
+echo '/mnt/swap/swapfile none swap sw 0 0' >> /etc/fstab
+```
+
 ### create swapfile
 ```
 swapoff -a
@@ -168,11 +179,6 @@ dd if=/dev/zero of=/mnt/swap/swapfile bs=1G count=128
 chmod 600 /mnt/swap/swapfile
 mkswap /mnt/swap/swapfile
 swapon /mnt/swap/swapfile
-```
-
-### add to /etc/fstab
-```
-cat '/mnt/swap/swapfile none swap sw 0 0' >> /etc/fstab
 ```
 
 ## ramdisk
