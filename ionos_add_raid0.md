@@ -120,7 +120,7 @@ echo '/dev/vg01/swap   /mnt/swap      ext4    defaults                0 0' >> /e
 `mkdir -p /root/solana && mount /dev/vg01/solana`
 
 ##### Mount /mnt/swapfile to RAID0
-`mkdir -p /mnt/swap && mount /dev/vg01/swapfile`
+`mkdir -p /mnt/swap && mount /dev/vg01/swap`
 
 ##### Making speed test
 ```
