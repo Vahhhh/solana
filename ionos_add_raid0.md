@@ -104,6 +104,7 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 pvcreate /dev/md5
 vgcreate vg01 /dev/md5
 lvcreate -L 1T -n solana vg01
+lvcreate -L 128G -n swapfile vg01
 mkfs.ext4 /dev/vg01/solana
 ```
 
@@ -113,7 +114,7 @@ echo '/dev/vg01/solana /root/solana   ext4    defaults                0 0' >> /e
 ```
 
 ##### Mount /root/solana to RAID0
-`mkdir /root/solana && mount /dev/vg01/solana`
+`mkdir -p /root/solana && mount /dev/vg01/solana`
 
 ##### Making speed test
 ```
