@@ -104,7 +104,7 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 pvcreate /dev/md5
 vgcreate vg01 /dev/md5
 lvcreate -L 1T -n solana vg01
-lvcreate -L 128G -n swap vg01
+lvcreate -L 135G -n swap vg01
 mkfs.ext4 /dev/vg01/solana
 mkfs.ext4 /dev/vg01/swap
 ```
@@ -113,14 +113,18 @@ mkfs.ext4 /dev/vg01/swap
 ```
 echo '/dev/vg01/solana /root/solana   ext4    defaults                0 0' >> /etc/fstab
 echo '/dev/vg01/swap   /mnt/swap      ext4    defaults                0 0' >> /etc/fstab
-
+echo '/mnt/swap/swapfile none swap sw 0 0' >> /etc/fstab
 ```
 
 ##### Mount /root/solana to RAID0
-`mkdir -p /root/solana && mount /dev/vg01/solana`
+```
+mkdir -p /root/solana && mount /dev/vg01/solana
+```
 
 ##### Mount /mnt/swapfile to RAID0
-`mkdir -p /mnt/swap && mount /dev/vg01/swap`
+```
+mkdir -p /mnt/swap && mount /dev/vg01/swap
+```
 
 ##### Making speed test
 ```
@@ -164,14 +168,6 @@ Total      | 3.11 GB/s     (6.0k) | 3.37 GB/s     (3.2k)
 
 
 ## swapfile
-
-### add swap to /etc/fstab
-```
-mkdir -p /mnt/swap
-
-echo '/mnt/swap/swapfile none swap sw 0 0' >> /etc/fstab
-```
-
 ### create swapfile
 ```
 swapoff -a
@@ -184,7 +180,7 @@ swapon /mnt/swap/swapfile
 ## ramdisk
 ### add to /etc/fstab
 ```
-cat 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=100G 0 0' >> /etc/fstab
+echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=100G 0 0' >> /etc/fstab
 ```
 
 ***delete other swaps NOW!!!***
