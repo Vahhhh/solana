@@ -108,7 +108,9 @@ mkfs.ext4 /dev/vg01/solana
 ```
 
 ##### Save mount info to /etc/fstab
-`echo '/dev/vg01/solana /root/solana   ext4    defaults                0 0' >> /etc/fstab' >> /etc/fstab`
+```
+echo '/dev/vg01/solana /root/solana   ext4    defaults                0 0' >> /etc/fstab' >> /etc/fstab
+```
 
 ##### Mount /root/solana to RAID0
 `mkdir /root/solana && mount /dev/vg01/solana`
