@@ -116,6 +116,9 @@ echo '/dev/vg01/solana /root/solana   ext4    defaults                0 0' >> /e
 ##### Mount /root/solana to RAID0
 `mkdir -p /root/solana && mount /dev/vg01/solana`
 
+##### Mount /mnt/swapfile to RAID0
+`mkdir -p /mnt/swapfile && mount /dev/vg01/swapfile`
+
 ##### Making speed test
 ```
 apt install fio
