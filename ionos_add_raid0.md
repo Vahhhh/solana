@@ -112,7 +112,7 @@ mkfs.ext4 /dev/vg01/swap
 ##### Save mount info to /etc/fstab
 ```
 echo '/dev/vg01/solana /root/solana   ext4    defaults                0 0' >> /etc/fstab'
-echo '/dev/vg01/swap   /root/swap     ext4    defaults                0 0' >> /etc/fstab'
+echo '/dev/vg01/swap   /mnt/swap      ext4    defaults                0 0' >> /etc/fstab'
 
 ```
 
