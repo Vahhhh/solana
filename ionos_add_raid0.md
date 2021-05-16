@@ -100,35 +100,45 @@ Yes/No? Yes
 `pvresize /dev/md4 --setphysicalvolumesize 42949804032b`
 
 
-##### Format /dev/md5
-`mkfs.ext4 /dev/md5`
+>##### Format /dev/md5
+>`mkfs.ext4 /dev/md5`
+>
+>```
+># fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fiotest --filename=testfio --bs=4k --iodepth=64 --size=8G --readwrite=randrw --rwmixread=75
+>
+>Jobs: 1 (f=1): [m(1)][100.0%][r=961MiB/s,w=323MiB/s][r=246k,w=82.6k IOPS][eta 00m:00s]
+>  read: IOPS=249k, BW=972MiB/s (1020MB/s)(6141MiB/6315msec)
+>  write: IOPS=83.1k, BW=325MiB/s (341MB/s)(2051MiB/6315msec); 0 zone resets
+>```
+>
+>##### Save mount info to /etc/fstab
+>`echo '/dev/md5        /root/solana    ext4    defaults                0 0' >> /etc/fstab`
+>
+>##### Mount /root/solana to RAID0
+>`mkdir /root/solana && mount /dev/md5`
 
+
+Create RAID0 with LVM
+Create new LVM /dev/md5
 ```
-# fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fiotest --filename=testfio --bs=4k --iodepth=64 --size=8G --readwrite=randrw --rwmixread=75
-
-Jobs: 1 (f=1): [m(1)][100.0%][r=961MiB/s,w=323MiB/s][r=246k,w=82.6k IOPS][eta 00m:00s]
-  read: IOPS=249k, BW=972MiB/s (1020MB/s)(6141MiB/6315msec)
-  write: IOPS=83.1k, BW=325MiB/s (341MB/s)(2051MiB/6315msec); 0 zone resets
+pvcreate /dev/md5
+vgcreate vg01 /dev/md5
+lvcreate -L 1T -n solana vg01
+mkfs.ext4 /dev/v
 ```
 
 ##### Save mount info to /etc/fstab
-`echo '/dev/md5        /root/solana    ext4    defaults                0 0' >> /etc/fstab`
+`echo '/dev/vg01/solana   /root/solana    ext4    defaults                0 0' >> /etc/fstab`
 
 ##### Mount /root/solana to RAID0
-`mkdir /root/solana && mount /dev/md5`
+`mkdir /root/solana && mount /dev/vg01/solana`
 
 
-> If you want to use RAID0 with LVM
-> Create new LVM /dev/md5 (SEEM TO BE NOT SO FAST!!!)
-> ```
-> pvcreate /dev/md5
-> vgcreate vg01 /dev/md5
-> lvcreate -L 1T -n solana vg01
-> ```
-> ```
-> fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fiotest --filename=testfio --bs=4k --iodepth=64 --size=8G --readwrite=randrw --rwmixread=75
-> 
-> Jobs: 1 (f=1): [m(1)][100.0%][r=845MiB/s,w=283MiB/s][r=216k,w=72.4k IOPS][eta 00m:00s]
->   read: IOPS=219k, BW=857MiB/s (899MB/s)(6141MiB/7165msec)
->   write: IOPS=73.3k, BW=286MiB/s (300MB/s)(2051MiB/7165msec); 0 zone resets
-> ```
+Making speed test
+```
+fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fiotest --filename=testfio --bs=4k --iodepth=64 --size=8G --readwrite=randrw --rwmixread=75
+
+Jobs: 1 (f=1): [m(1)][100.0%][r=845MiB/s,w=283MiB/s][r=216k,w=72.4k IOPS][eta 00m:00s]
+  read: IOPS=219k, BW=857MiB/s (899MB/s)(6141MiB/7165msec)
+  write: IOPS=73.3k, BW=286MiB/s (300MB/s)(2051MiB/7165msec); 0 zone resets
+```
