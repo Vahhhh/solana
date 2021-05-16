@@ -57,7 +57,7 @@ Yes/No? Yes
 `mdadm /dev/md4 --fail /dev/nvme0n1p4 --remove /dev/nvme0n1p4`
 
 ##### Resize partition to 50Gb (one command)
-`parted -a opt /dev/nvme1n1 resizepart 4 90GB`
+`parted -a opt /dev/nvme0n1 resizepart 4 90GB`
 ##### or
 ##### Resize partition to 50Gb (inside parted)
 ```
