@@ -158,3 +158,24 @@ Write      | 1.59 GB/s     (3.1k) | 1.74 GB/s     (1.6k)
 Total      | 3.11 GB/s     (6.0k) | 3.37 GB/s     (3.2k)
 
 ```
+
+
+# swapfile
+## create swapfile
+swapoff -a
+dd if=/dev/zero of=/mnt/swapfile bs=1G count=128
+chmod 600 /mnt/swapfile
+mkswap /mnt/swapfile
+swapon /mnt/swapfile
+
+## add to /etc/fstab
+cat '/mnt/swapfile none swap sw 0 0' >> /etc/fstab
+
+# ramdisk
+## add to /etc/fstab
+cat 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=100G 0 0' >> /etc/fstab
+
+#delete other swaps
+
+mkdir -p /mnt/ramdisk
+mount /mnt/ramdisk
