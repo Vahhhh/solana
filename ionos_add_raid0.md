@@ -32,16 +32,18 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 
 ##### Resize partition to 50Gb (one command)
 `parted -a opt /dev/nvme1n1 resizepart 4 90GB`
-##### or
-##### Resize partition to 50Gb (inside parted)
-```
-parted
-(parted) print list
-(parted) select /dev/nvme1n1
-(parted) resizepart 4 90GB
-Warning: Shrinking a partition can cause data loss, are you sure you want to continue?
-Yes/No? Yes
-```
+
+>##### or
+>##### Resize partition to 50Gb (inside parted)
+>```
+>parted
+>(parted) print list
+>(parted) select /dev/nvme1n1
+>(parted) resizepart 4 90GB
+>Warning: Shrinking a partition can cause data loss, are you sure you want to continue?
+>Yes/No? Yes
+>```
+
 ##### Add disk to /dev/md4
 `mdadm -a /dev/md4 /dev/nvme1n1p4`
 
@@ -57,16 +59,17 @@ Yes/No? Yes
 
 ##### Resize partition to 50Gb (one command)
 `parted -a opt /dev/nvme0n1 resizepart 4 90GB`
-##### or
-##### Resize partition to 50Gb (inside parted)
-```
-parted
-(parted) select /dev/nvme0n1
-(parted) print list
-(parted) resizepart 4 90GB
-Warning: Shrinking a partition can cause data loss, are you sure you want to continue?
-Yes/No? Yes
-```
+
+>##### or
+>##### Resize partition to 50Gb (inside parted)
+>```
+>parted
+>(parted) select /dev/nvme0n1
+>(parted) print list
+>(parted) resizepart 4 90GB
+>Warning: Shrinking a partition can cause data loss, are you sure you want to continue?
+>Yes/No? Yes
+>```
 
 ##### Add disk to /dev/md4
 `mdadm -a /dev/md4 /dev/nvme0n1p4`
