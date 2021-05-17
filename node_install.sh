@@ -14,6 +14,10 @@ hostname $hostname
 ```
 
 ### reconnect
+```
+hostname=solana-1
+solanaversion=v1.6.9
+```
 
 ```
 mkdir /root/solana
