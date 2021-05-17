@@ -140,10 +140,14 @@ sudo systemctl daemon-reload
 
 systemctl restart logrotate.service
 
+# if you have error 'error: skipping "/var/log/debug" because parent directory has insecure permissions' run the following
+# chmod 755 /var/log/ && chown root:root /var/log/
+
 systemctl enable solana.service
 systemctl start solana.service
 
 journalctl -u solana.service
+
 
 ll /root/solana/ledger/
 
