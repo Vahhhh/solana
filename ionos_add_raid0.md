@@ -48,7 +48,7 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 `mdadm -a /dev/md4 /dev/nvme1n1p4`
 
 ##### Waiting until RAID sync
-`until grep -A1 md4 /proc/mdstat | grep -m 1 "UU"; do sleep 1 ; done`
+`until grep -A1 md4 /proc/mdstat | grep -m 1 "UU"; do grep recovery /proc/mdstat && sleep 10 ; done`
 ##### or
 `watch -n 3 cat /proc/mdstat`
 
@@ -75,7 +75,7 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 `mdadm -a /dev/md4 /dev/nvme0n1p4`
 
 ##### Waiting until RAID sync
-`until grep -A1 md4 /proc/mdstat | grep -m 1 "UU"; do sleep 1 ; done`
+`until grep -A1 md4 /proc/mdstat | grep -m 1 "UU"; do grep recovery /proc/mdstat && sleep 10 ; done`
 ##### or
 `watch -n 3 cat /proc/mdstat`
 
