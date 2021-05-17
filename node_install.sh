@@ -183,7 +183,7 @@ rm -rf /etc/telegraf/telegraf.conf
 # make sure you are the user you run solana with . eq. su - solana
 
 apt -y install git
-git clone https://github.com/stakeconomy/solanamonitoring/
+cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/
 ```
 
 # Change config with your nodename
