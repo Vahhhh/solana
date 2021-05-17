@@ -185,7 +185,7 @@ swapon /mnt/swap/swapfile
 echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=100G 0 0' >> /etc/fstab
 ```
 
-***delete other swaps NOW!!!***
+***comment other swaps in /etc/fstab NOW!!!***
 
 ```
 mkdir -p /mnt/ramdisk
