@@ -64,7 +64,7 @@ echo '/swapfile none swap sw 0 0' >> /etc/fstab  && \
 ## add to /etc/fstab
 echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=100G 0 0' >> /etc/fstab  && \
 
-#delete other swaps
+# delete other swaps from /etc/fstab
 
 mkdir -p /mnt/ramdisk && \
 mount /mnt/ramdisk
