@@ -93,6 +93,8 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 ##### Save RAID config to mdadm.comf
 `sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf`
 
+##### Comment 2 previous raid configurations
+
 ##### Update initramfs
 `sudo update-initramfs -u`
 
