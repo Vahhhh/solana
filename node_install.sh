@@ -1,25 +1,18 @@
 # Solana node install v.1.0
 
-```
 hostname=solana-1
 solanaversion=v1.6.9
-```
 
-
-```
 apt update -y && apt upgrade -y
 
 echo $hostname > /etc/hostname
 hostname $hostname
-```
 
 ### reconnect
-```
+
 hostname=solana-1
 solanaversion=v1.6.9
-```
 
-```
 mkdir /root/solana
 cd /root/solana
 
@@ -34,9 +27,7 @@ solana config set --url https://api.testnet.solana.com
 solana transaction-count
 
 solana-gossip spy --entrypoint entrypoint.testnet.solana.com:8001
-```
 
-```
 sudo bash -c "cat >/etc/sysctl.d/20-solana-udp-buffers.conf <<EOF
 # Increase UDP buffer size
 net.core.rmem_default = 134217728
@@ -44,29 +35,24 @@ net.core.rmem_max = 134217728
 net.core.wmem_default = 134217728
 net.core.wmem_max = 134217728
 EOF"
-```
-```
+
 sudo bash -c "cat >/etc/sysctl.d/20-solana-mmaps.conf <<EOF
 # Increase memory mapped files limit
 vm.max_map_count = 700000
 EOF"
-```
-```
+
 sudo bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
 # Increase process file descriptor count limit
 * - nofile 700000
 EOF"
-```
 
-```
 sudo sysctl -p /etc/sysctl.d/20-solana-udp-buffers.conf
 sudo sysctl -p /etc/sysctl.d/20-solana-mmaps.conf
 sudo systemctl daemon-reload
-```
 
 
 ### Create swapfile if hasn't been created before
-```
+
 # swapfile
 ## create swapfile
 swapoff -a
@@ -88,18 +74,17 @@ mkdir -p /mnt/ramdisk
 mount /mnt/ramdisk
 
 # add to solana.service
---accounts /mnt/ramdisk/accounts
-```
+#--accounts /mnt/ramdisk/accounts
+
 
 ### Close all open sessions (log out then, in again) ###
 
-`solana config set --keypair ~/solana/validator-keypair.json`
+solana config set --keypair ~/solana/validator-keypair.json
 
-`solana-keygen new -o ~/solana/vote-account-keypair.json`
+solana-keygen new -o ~/solana/vote-account-keypair.json
 
-`solana create-vote-account ~/solana/vote-account-keypair.json ~/solana/validator-keypair.json`
+solana create-vote-account ~/solana/vote-account-keypair.json ~/solana/validator-keypair.json
 
-```
 cat > /root/solana/solana.service <<EOF
 [Unit]
 Description=Solana TdS node
@@ -112,7 +97,7 @@ RestartSec=1
 LimitNOFILE=1024000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
---entrypoint testnet.solana.com:8001 \
+--entrypoint api.testnet.solana.com:8001 \
 --trusted-validator 5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on \
 --trusted-validator 7XSY3MrYnK8vq693Rju17bbPkCN3Z7KvvfvJx4kdrsSY \
 --trusted-validator Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN \
@@ -140,9 +125,7 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 WantedBy=multi-user.target
 EOF
 
-```
 
-```
 cat > /root/solana/solana.logrotate <<EOF
 /root/solana/solana-validator.log {
   rotate 7
@@ -171,12 +154,9 @@ ll /root/solana/ledger/
 solana catchup /root/solana/validator-keypair.json --our-localhost
 
 
-```
-
 
 # Monitoring
 
-```
 # install telegraf
 cat <<EOF | sudo tee /etc/apt/sources.list.d/influxdata.list
 deb https://repos.influxdata.com/ubuntu bionic stable
@@ -206,7 +186,7 @@ apt -y install git
 git clone https://github.com/stakeconomy/solanamonitoring/
 ```
 
-Change config
+# Change config with your nodename
 ```
 cat > /etc/telegraf/telegraf.conf <<EOF
 # Global Agent Configuration
