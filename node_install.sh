@@ -24,7 +24,7 @@ solana config set --url https://api.testnet.solana.com && \
 solana transaction-count && \
 solana-gossip spy --entrypoint entrypoint.testnet.solana.com:8001
 
-sudo bash -c "cat >/etc/sysctl.d/20-solana-udp-buffers.conf <<EOF
+bash -c "cat >/etc/sysctl.d/20-solana-udp-buffers.conf <<EOF
 # Increase UDP buffer size
 net.core.rmem_default = 134217728
 net.core.rmem_max = 134217728
@@ -32,19 +32,19 @@ net.core.wmem_default = 134217728
 net.core.wmem_max = 134217728
 EOF"
 
-sudo bash -c "cat >/etc/sysctl.d/20-solana-mmaps.conf <<EOF
+bash -c "cat >/etc/sysctl.d/20-solana-mmaps.conf <<EOF
 # Increase memory mapped files limit
 vm.max_map_count = 700000
 EOF"
 
-sudo bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
+bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
 # Increase process file descriptor count limit
 * - nofile 700000
 EOF"
 
-sudo sysctl -p /etc/sysctl.d/20-solana-udp-buffers.conf
-sudo sysctl -p /etc/sysctl.d/20-solana-mmaps.conf
-sudo systemctl daemon-reload
+sysctl -p /etc/sysctl.d/20-solana-udp-buffers.conf
+sysctl -p /etc/sysctl.d/20-solana-mmaps.conf
+systemctl daemon-reload
 
 
 ### Create swapfile if hasn't been created before
@@ -136,7 +136,7 @@ EOF
 ln -s /root/solana/solana.service /etc/systemd/system
 ln -s /root/solana/solana.logrotate /etc/logrotate.d/
 
-sudo systemctl daemon-reload
+systemctl daemon-reload
 
 systemctl restart logrotate.service
 
@@ -158,27 +158,27 @@ solana catchup /root/solana/validator-keypair.json --our-localhost
 # Monitoring
 
 # install telegraf
-cat <<EOF | sudo tee /etc/apt/sources.list.d/influxdata.list
+cat <<EOF | tee /etc/apt/sources.list.d/influxdata.list
 deb https://repos.influxdata.com/ubuntu bionic stable
 EOF
 
-sudo curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+curl -sL https://repos.influxdata.com/influxdb.key | apt-key add -
 
-sudo apt-get update
-sudo apt-get -y install telegraf jq bc
+apt-get update
+apt-get -y install telegraf jq bc
 
-sudo systemctl enable --now telegraf
-sudo systemctl is-enabled telegraf
+systemctl enable --now telegraf
+systemctl is-enabled telegraf
 systemctl stop telegraf
 systemctl status telegraf
 
-# make the telegraf user sudo and adm to be able to execute scripts as sol user
-sudo adduser telegraf sudo
-sudo adduser telegraf adm
-sudo -- bash -c 'echo "telegraf ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
+# make the telegraf user and sudo adm to be able to execute scripts as sol user
+adduser telegraf sudo
+adduser telegraf adm
+echo "telegraf ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-sudo cp /etc/telegraf/telegraf.conf /etc/telegraf/telegraf.conf.orig
-sudo rm -rf /etc/telegraf/telegraf.conf
+cp /etc/telegraf/telegraf.conf /etc/telegraf/telegraf.conf.orig
+rm -rf /etc/telegraf/telegraf.conf
 
 # make sure you are the user you run solana with . eq. su - solana
 
