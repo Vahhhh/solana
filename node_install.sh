@@ -16,16 +16,12 @@ solanaversion=v1.6.9
 mkdir /root/solana
 cd /root/solana
 
-sh -c "$(curl -sSfL https://release.solana.com/$solanaversion/install)"
-
+sh -c "$(curl -sSfL https://release.solana.com/$solanaversion/install)" && \
 export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 
-solana --version
-
-solana config set --url https://api.testnet.solana.com
-
-solana transaction-count
-
+solana --version && \
+solana config set --url https://api.testnet.solana.com && \
+solana transaction-count && \
 solana-gossip spy --entrypoint entrypoint.testnet.solana.com:8001
 
 sudo bash -c "cat >/etc/sysctl.d/20-solana-udp-buffers.conf <<EOF
@@ -55,22 +51,22 @@ sudo systemctl daemon-reload
 
 # swapfile
 ## create swapfile
-swapoff -a
-dd if=/dev/zero of=/swapfile bs=1G count=128
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
+swapoff -a && \
+dd if=/dev/zero of=/swapfile bs=1G count=128 && \
+chmod 600 /swapfile && \
+mkswap /swapfile && \
+swapon /swapfile && \
 
 ## add to /etc/fstab
-echo '/swapfile none swap sw 0 0' >> /etc/fstab
+echo '/swapfile none swap sw 0 0' >> /etc/fstab  && \
 
 # ramdisk
 ## add to /etc/fstab
-echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=100G 0 0' >> /etc/fstab
+echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=100G 0 0' >> /etc/fstab  && \
 
 #delete other swaps
 
-mkdir -p /mnt/ramdisk
+mkdir -p /mnt/ramdisk && \
 mount /mnt/ramdisk
 
 # add to solana.service
