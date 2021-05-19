@@ -172,10 +172,10 @@ Total      | 3.11 GB/s     (6.0k) | 3.37 GB/s     (3.2k)
 ## swapfile
 ### create swapfile
 ```
-swapoff -a
-dd if=/dev/zero of=/mnt/swap/swapfile bs=1G count=128
-chmod 600 /mnt/swap/swapfile
-mkswap /mnt/swap/swapfile
+swapoff -a && \
+dd if=/dev/zero of=/mnt/swap/swapfile bs=1G count=128 && \
+chmod 600 /mnt/swap/swapfile && \
+mkswap /mnt/swap/swapfile && \
 swapon /mnt/swap/swapfile
 ```
 
