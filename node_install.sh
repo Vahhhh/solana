@@ -13,7 +13,7 @@ hostname $hostname
 hostname=solana-1
 solanaversion=v1.6.9
 
-mkdir /root/solana
+mkdir -p /root/solana
 cd /root/solana
 
 sh -c "$(curl -sSfL https://release.solana.com/$solanaversion/install)" && \
