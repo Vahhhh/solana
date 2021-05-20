@@ -3,7 +3,7 @@
 hostname=solana-1
 solanaversion=v1.6.9
 
-apt update -y && apt upgrade -y && apt install curl gnupg -y
+apt update -y && apt upgrade -y && apt install curl gnupg git -y
 
 echo $hostname > /etc/hostname
 hostname $hostname
@@ -185,7 +185,6 @@ rm -rf /etc/telegraf/telegraf.conf
 
 # make sure you are the user you run solana with . eq. su - solana
 
-apt -y install git
 cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/
 ```
 
