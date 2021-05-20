@@ -112,7 +112,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --dynamic-port-range 8000-8010 \
 --log /root/solana/solana.log \
 --snapshot-interval-slots 500 \
---maximum-local-snapshot-age 500 \
+--maximum-local-snapshot-age 1000 \
 --snapshot-compression none \
 --no-port-check \
 --rpc-bind-address 127.0.0.1 \
