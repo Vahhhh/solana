@@ -3,7 +3,7 @@
 hostname=solana-1
 solanaversion=v1.6.9
 
-apt update -y && apt upgrade -y && apt install curl -y
+apt update -y && apt upgrade -y && apt install curl gnupg -y
 
 echo $hostname > /etc/hostname
 hostname $hostname
