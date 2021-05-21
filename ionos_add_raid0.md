@@ -6,6 +6,13 @@ https://documentation.suse.com/sles/12-SP4/html/SLES-all/cha-raid-resize.html#se
 
 https://winitpro.ru/index.php/2020/07/09/parted-upravlenie-razdelami-linux/
 
+#### donate if it was helpful
+
+SOL - `2Y4C2e5d6bUY1nb5mqFfkSCyAt39K7cYEim2gD7vAtKC`
+
+LTC - `MAaitfT32P9CZdQApTf6Mm4WZygakkGmg6`
+
+BTC - `36N8gkZ19Doem8hXv6GL7xXVuQv8aDMmoX`
 
 ## Decreasing the Size of the RAID Array to 40Gb
 
