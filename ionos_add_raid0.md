@@ -103,6 +103,7 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 
 ##### Create RAID0 with LVM /dev/vg01/solana
 ```
+mkfs.ext4 /dev/md5
 pvcreate /dev/md5
 vgcreate vg01 /dev/md5
 lvcreate -L 1T -n solana vg01
