@@ -6,14 +6,6 @@ https://documentation.suse.com/sles/12-SP4/html/SLES-all/cha-raid-resize.html#se
 
 https://winitpro.ru/index.php/2020/07/09/parted-upravlenie-razdelami-linux/
 
-#### donate if it was helpful
-
-SOL - `2Y4C2e5d6bUY1nb5mqFfkSCyAt39K7cYEim2gD7vAtKC`
-
-LTC - `MAaitfT32P9CZdQApTf6Mm4WZygakkGmg6`
-
-BTC - `36N8gkZ19Doem8hXv6GL7xXVuQv8aDMmoX`
-
 ## Decreasing the Size of the RAID Array to 40Gb
 
 ##### Check
@@ -100,7 +92,14 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 ##### Save RAID config to mdadm.comf
 `sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf`
 
-##### Comment 2 previous raid configurations
+##### !!! Comment 2 previous raid configurations !!!
+```
+#ARRAY /dev/md2 level=raid1 num-devices=2 devices=/dev/nvme0n1p2,/dev/nvme1n1p2
+#ARRAY /dev/md4 level=raid1 num-devices=2 devices=/dev/nvme0n1p4,/dev/nvme1n1p4
+ARRAY /dev/md2 metadata=1.0 name=punix:2 UUID=3b5ac19:88798a6:d26c602:b42a1ab
+ARRAY /dev/md4 metadata=1.0 name=punix:4 UUID=ae545ef:65a40ca:a6cd140:2cda24a
+ARRAY /dev/md5 metadata=1.2 name=D0C3452:5 UUID=cf0f0c2:d7fbb90:0d1b2fc:35aa2ab
+```
 
 ##### Update initramfs
 `sudo update-initramfs -u`
@@ -199,3 +198,11 @@ echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=100G 0 0' >> 
 mkdir -p /mnt/ramdisk
 mount /mnt/ramdisk
 ```
+
+#### donate if it was helpful
+
+SOL - `2Y4C2e5d6bUY1nb5mqFfkSCyAt39K7cYEim2gD7vAtKC`
+
+LTC - `MAaitfT32P9CZdQApTf6Mm4WZygakkGmg6`
+
+BTC - `36N8gkZ19Doem8hXv6GL7xXVuQv8aDMmoX`
