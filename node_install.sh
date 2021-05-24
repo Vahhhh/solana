@@ -17,6 +17,11 @@ solanaversion=v1.6.9
 mkdir -p /root/solana
 cd /root/solana
 
+### add the file ~/solana/validator-keypair.json by
+### nano ~/solana/validator-keypair.json and COPY-PASTE
+### or by copying the file from another host by SCP for example
+### if you are making reinstall, then add also ~/solana/vote-account-keypair.json and don't create it later again!
+
 sh -c "$(curl -sSfL https://release.solana.com/$solanaversion/install)" && \
 export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 
