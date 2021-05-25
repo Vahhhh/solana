@@ -139,7 +139,7 @@ mkdir -p /mnt/swap && mount /dev/vg01/swap
 ```
 apt install fio -y
 cd /root/solana
-curl -sL https://github.com/masonr/yet-another-bench-script/raw/master/yabs.sh | bash -s -- -ig
+curl -sL yabs.sh | bash -s -- -ig
 
 # ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
 #              Yet-Another-Bench-Script              #
