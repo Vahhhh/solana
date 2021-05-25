@@ -30,7 +30,7 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 `mdadm /dev/md4 --fail /dev/nvme1n1p4 --remove /dev/nvme1n1p4`
 
 ##### Resize partition to 50Gb (one command)
-`parted -s -a opt /dev/nvme1n1 resizepart 4 90GB`
+`parted -a opt /dev/nvme1n1 resizepart 4 90GB`
 
 >##### or
 >##### Resize partition to 50Gb (inside parted)
@@ -57,7 +57,7 @@ mdadm -D /dev/md4 | grep -e "Array Size" -e "Dev Size"
 `mdadm /dev/md4 --fail /dev/nvme0n1p4 --remove /dev/nvme0n1p4`
 
 ##### Resize partition to 50Gb (one command)
-`parted -s -a opt /dev/nvme0n1 resizepart 4 90GB`
+`parted -a opt /dev/nvme0n1 resizepart 4 90GB`
 
 >##### or
 >##### Resize partition to 50Gb (inside parted)
