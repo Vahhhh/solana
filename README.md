@@ -10,6 +10,6 @@ My testnet node - https://metrics.stakeconomy.com/d/f2b2HcaGz/solana-community-v
 
 Test speed - https://github.com/masonr/yet-another-bench-script/
 
-`curl -sL https://github.com/masonr/yet-another-bench-script/raw/master/yabs.sh | bash -s -- -ig`
+`curl -sL yabs.sh | bash -s -- -ig`
 
 Monitoring - https://github.com/stakeconomy/solanamonitoring
