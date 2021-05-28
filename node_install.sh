@@ -2,7 +2,7 @@
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/
 
 hostname=solana-1
-solanaversion=v1.6.9
+solanaversion=v1.6.10
 
 apt update -y && apt upgrade -y && apt install curl gnupg git -y
 
@@ -12,7 +12,7 @@ hostname $hostname
 ### reconnect
 
 hostname=solana-1
-solanaversion=v1.6.9
+solanaversion=v1.6.10
 
 mkdir -p /root/solana
 cd /root/solana
