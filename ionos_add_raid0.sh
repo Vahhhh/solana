@@ -16,7 +16,7 @@ sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf && \
 sudo update-initramfs -u && \
 pvresize /dev/md4 --setphysicalvolumesize 42949804032b && \
 mkfs.ext4 /dev/md5 && \
-pvcreate /dev/md5 && \
+yes | pvcreate /dev/md5 && \
 vgcreate vg01 /dev/md5 && \
 lvcreate -L 1T -n solana vg01 && \
 lvcreate -L 135G -n swap vg01 && \
