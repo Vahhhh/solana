@@ -58,7 +58,7 @@ systemctl daemon-reload
 # swapfile
 ## create swapfile
 swapoff -a && \
-dd if=/dev/zero of=/swapfile bs=1G count=128 && \
+dd if=/dev/zero of=/swapfile bs=1G count=64 && \
 chmod 600 /swapfile && \
 mkswap /swapfile && \
 swapon /swapfile && \
@@ -68,7 +68,7 @@ echo '/swapfile none swap sw 0 0' >> /etc/fstab  && \
 
 # ramdisk
 ## add to /etc/fstab
-echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=100G 0 0' >> /etc/fstab  && \
+echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=64G 0 0' >> /etc/fstab  && \
 
 # delete other swaps from /etc/fstab
 
