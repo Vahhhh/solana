@@ -192,10 +192,10 @@ rm -rf /etc/telegraf/telegraf.conf
 # make sure you are the user you run solana with . eq. su - solana
 
 cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/
-```
+
 
 # Change config with your nodename
-```
+
 cat > /etc/telegraf/telegraf.conf <<EOF
 # Global Agent Configuration
 [agent]
@@ -235,13 +235,22 @@ cat > /etc/telegraf/telegraf.conf <<EOF
   data_format = "influx"
   data_type = "integer"
 EOF
-```
 
-```
+
 systemctl restart telegraf
-```
 
-Check https://metrics.stakeconomy.com/
+
+# configure fw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp
+sudo ufw allow 8000:8010/tcp
+sudo ufw allow 8000:8010/udp
+sudo ufw allow 8899
+
+sudo ufw enable
+
+# Check https://metrics.stakeconomy.com/
 
 
 #### donate if it was helpful
