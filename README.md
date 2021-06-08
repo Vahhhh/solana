@@ -13,3 +13,5 @@ Test speed - https://github.com/masonr/yet-another-bench-script/
 `curl -sL yabs.sh | bash -s -- -ig`
 
 Monitoring - https://github.com/stakeconomy/solanamonitoring
+
+Watch for the stakebot - https://github.com/solana-labs/stake-o-matic/wiki/
