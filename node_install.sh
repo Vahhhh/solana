@@ -244,9 +244,8 @@ systemctl restart telegraf
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow 22/tcp
-sudo ufw allow 8000:8010/tcp
-sudo ufw allow 8000:8010/udp
-sudo ufw allow 8899
+sudo ufw allow 8000:10000/tcp
+sudo ufw allow 8000:10000/udp
 
 sudo ufw enable
 
