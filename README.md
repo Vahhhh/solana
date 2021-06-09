@@ -17,3 +17,5 @@ Monitoring - https://github.com/stakeconomy/solanamonitoring
 Watch for the stakebot - https://github.com/solana-labs/stake-o-matic/wiki/
 
 Building Solana binaries from source - https://github.com/agjell/sol-tutorials/blob/master/building-solana-from-source.md
+
+Automatic script installing the node - https://github.com/mfactory-lab/sv-manager
