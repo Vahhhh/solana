@@ -119,7 +119,6 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --snapshot-interval-slots 500 \
 --maximum-local-snapshot-age 1000 \
 --snapshot-compression none \
---no-port-check \
 --rpc-bind-address 127.0.0.1 \
 --rpc-port 8899 \
 --accounts-db-caching-enabled
@@ -242,8 +241,6 @@ systemctl restart telegraf
 # configure fw
 sudo ufw reset
 
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
 sudo ufw allow 22/tcp
 sudo ufw allow 8000:10000/tcp
 sudo ufw allow 8000:10000/udp
