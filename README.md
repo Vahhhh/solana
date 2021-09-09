@@ -6,7 +6,7 @@
 
 [ОЧЕНЬ полезные видео по настройке ноды](https://www.youtube.com/c/DimAn_io/videos)
 
-[Статистика моей ноды](https://metrics.stakeconomy.com/d/f2b2HcaGz/solana-community-validator-dashboard?orgId=1&refresh=1m&var-server=vah-stakeiteasy-test&var-inter=30s&var-cpu=All&var-netif=All)
+[Статистика моей ноды](https://metrics.stakeconomy.com/d/f2b2HcaGz/solana-community-validator-dashboard?orgId=1&refresh=1m&var-server=vah-stakeiteasy-test&var-inter=30s&var-cpu=All&var-netif=All&var-pubkey=4P8diDfWD1ra7bF8BXDPUExMg2QAhTxVLTq3tU4QcH8p)
 
 Тестируем скорость интернета - https://github.com/masonr/yet-another-bench-script/
 
