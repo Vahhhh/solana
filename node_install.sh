@@ -2,7 +2,7 @@
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/
 
 hostname=solana-1
-solanaversion=v1.7.1
+solanaversion=v1.8.0
 
 apt update -y && apt upgrade -y && apt install curl gnupg git -y
 
@@ -11,7 +11,7 @@ hostname $hostname
 
 ### reconnect
 
-solanaversion=v1.7.1
+solanaversion=v1.8.0
 
 mkdir -p /root/solana
 cd /root/solana
@@ -39,12 +39,12 @@ EOF"
 
 bash -c "cat >/etc/sysctl.d/20-solana-mmaps.conf <<EOF
 # Increase memory mapped files limit
-vm.max_map_count = 700000
+vm.max_map_count = 1000000
 EOF"
 
 bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
 # Increase process file descriptor count limit
-* - nofile 700000
+* - nofile 1000000
 EOF"
 
 sysctl -p /etc/sysctl.d/20-solana-udp-buffers.conf
@@ -102,12 +102,11 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --entrypoint entrypoint2.testnet.solana.com:8001 \
 --entrypoint entrypoint.testnet.solana.com:8001 \
 --entrypoint api.testnet.solana.com:8001 \
---trusted-validator 5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on \
---trusted-validator 7XSY3MrYnK8vq693Rju17bbPkCN3Z7KvvfvJx4kdrsSY \
---trusted-validator Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN \
---trusted-validator 9QxCLckBiJc783jnMvXZubK4wH86Eqqvashtrwvcsgkv \
+--known-validator 5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on \
+--known-validator 7XSY3MrYnK8vq693Rju17bbPkCN3Z7KvvfvJx4kdrsSY \
+--known-validator Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN \
+--known-validator 9QxCLckBiJc783jnMvXZubK4wH86Eqqvashtrwvcsgkv \
 --expected-genesis-hash 4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY \
---no-untrusted-rpc \
 --wal-recovery-mode skip_any_corrupted_record \
 --identity /root/solana/validator-keypair.json \
 --vote-account /root/solana/vote-account-keypair.json \
@@ -116,7 +115,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8010 \
 --log /root/solana/solana.log \
---snapshot-interval-slots 500 \
+--snapshot-interval-slots 1000 \
 --maximum-local-snapshot-age 1000 \
 --snapshot-compression none \
 --rpc-bind-address 127.0.0.1 \
