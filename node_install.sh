@@ -129,7 +129,7 @@ EOF
 
 
 cat > /root/solana/solana.logrotate <<EOF
-/root/solana/solana-validator.log {
+/root/solana/solana.log {
   rotate 7
   daily
   missingok
