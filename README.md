@@ -16,6 +16,7 @@
 `solana-keygen pubkey usb://ledger?key=0`
 
 [Мониторинг](https://github.com/stakeconomy/solanamonitoring)
+[Мониторинг-новый](https://solana.thevalidators.io/)
 
 [Тут можно посмотреть информацию о стейке от stakebot](https://github.com/solana-labs/stake-o-matic/wiki/)
 
