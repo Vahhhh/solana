@@ -2,7 +2,7 @@
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/
 
 hostname=solana-1
-solanaversion=v1.8.1
+solanaversion=v1.8.2
 
 apt update -y && apt upgrade -y && apt install curl gnupg git -y
 
@@ -11,7 +11,7 @@ hostname $hostname
 
 ### reconnect
 
-solanaversion=v1.8.1
+solanaversion=v1.8.2
 
 mkdir -p /root/solana
 cd /root/solana
@@ -118,7 +118,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --snapshot-interval-slots 1000 \
 --maximum-local-snapshot-age 1000 \
 --snapshot-compression none \
---rpc-bind-address 127.0.0.1 \
+--private-rpc \
 --rpc-port 8899 \
 --accounts-db-caching-enabled
 ExecReload=/bin/kill -s HUP $MAINPID
