@@ -86,7 +86,7 @@ solana-keygen new -o ~/solana/vote-account-keypair.json
 
 solana create-vote-account ~/solana/vote-account-keypair.json ~/solana/validator-keypair.json
 
-cat > /root/solana/solana.service <<EOF
+sudo tee <<EOF >/dev/null /root/solana/solana.service
 [Unit]
 Description=Solana TdS node
 After=network.target syslog.target
