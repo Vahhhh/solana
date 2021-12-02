@@ -170,12 +170,7 @@ EOF
 curl -sL https://repos.influxdata.com/influxdb.key | apt-key add -
 
 apt-get update
-apt-get -y install telegraf jq bc
-
-#systemctl enable --now telegraf
-systemctl is-enabled telegraf
-systemctl stop telegraf
-systemctl status telegraf
+apt-get -y install telegraf jq bc && systemctl stop telegraf
 
 # make the telegraf user and sudo adm to be able to execute scripts as sol user
 adduser telegraf sudo
