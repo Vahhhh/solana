@@ -86,8 +86,7 @@ solana-keygen new -o ~/solana/vote-account-keypair.json
 
 solana create-vote-account ~/solana/vote-account-keypair.json ~/solana/validator-keypair.json
 
-sudo tee <<EOF >/dev/null /root/solana/solana.service
-[Unit]
+printf '[Unit]
 Description=Solana TdS node
 After=network.target syslog.target
 StartLimitIntervalSec=0
@@ -125,7 +124,7 @@ ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
 WantedBy=multi-user.target
-EOF
+' > /root/solana/solana.service
 
 
 cat > /root/solana/solana.logrotate <<EOF
