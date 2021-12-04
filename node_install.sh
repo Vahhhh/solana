@@ -2,7 +2,7 @@
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/
 
 hostname=solana-1
-solanaversion=v1.8.2
+solanaversion=v1.8.5
 
 apt update -y && apt upgrade -y && apt install curl gnupg git -y
 
