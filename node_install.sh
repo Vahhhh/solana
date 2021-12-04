@@ -26,8 +26,7 @@ export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 
 solana --version && \
 solana config set --url https://api.testnet.solana.com && \
-solana transaction-count && \
-solana-gossip spy --entrypoint entrypoint.testnet.solana.com:8001
+solana transaction-count 
 
 bash -c "cat >/etc/sysctl.d/20-solana-udp-buffers.conf <<EOF
 # Increase UDP buffer size
