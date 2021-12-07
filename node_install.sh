@@ -183,17 +183,19 @@ rm -rf /etc/telegraf/telegraf.conf
 
 cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/
 
+# !!! CHANGE THIS NODENAME !!!
+read -p 'Enter nodename for monitoring: ' nodename
+
+
+printf '[agent]
+  hostname = "$nodename" # set this to a name you want to identify your node in the grafana dashboard
+  flush_interval = "30s"
+  interval = "30s"
+  '  > /etc/telegraf/telegraf.conf && \
 
 # Change config with your nodename
 
-cat > /etc/telegraf/telegraf.conf <<EOF
-# Global Agent Configuration
-[agent]
-  hostname = "nodename-testnet" # set this to a name you want to identify your node in the grafana dashboard
-  flush_interval = "15s"
-  interval = "15s"
-
-# Input Plugins
+printf '# Input Plugins
 [[inputs.cpu]]
     percpu = true
     totalcpu = true
@@ -224,8 +226,78 @@ cat > /etc/telegraf/telegraf.conf <<EOF
   timeout = "30s"
   data_format = "influx"
   data_type = "integer"
-EOF
+  '  > /etc/telegraf/telegraf.d/solanamonitoring.conf
 
+printf '##INPUTS
+[[inputs.cpu]]
+  ## Whether to report per-cpu stats or not
+  percpu = false
+  ## Whether to report total system cpu stats or not
+  totalcpu = true
+  ## If true, collect raw CPU time metrics.
+  collect_cpu_time = false
+  ## If true, compute and report the sum of all non-idle CPU states.
+  report_active = false
+
+[[inputs.disk]]
+  ## By default stats will be gathered for all mount points.
+  ## Set mount_points will restrict the stats to only the specified mount points.
+  mount_points = ["/", "/mnt/ledger", "/mnt/solana/ramdisk/accounts"]
+
+  ## Ignore mount points by filesystem type.
+  ignore_fs = ["devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+
+[[inputs.diskio]]
+
+[[inputs.net]]
+
+[[inputs.nstat]]
+
+[[inputs.procstat]]
+ pattern="solana"
+
+[[inputs.system]]
+
+[[inputs.systemd_units]]
+    [inputs.systemd_units.tagpass]
+    name = ["solana*"]
+
+[[inputs.mem]]
+
+[[inputs.swap]]
+
+[[inputs.exec]]
+  commands = [
+               "sudo -i -u solana /home/solana/monitoring/output_starter.sh output_validator_measurements"
+             ]
+  interval = "30s"
+  timeout = "30s"
+  json_name_key = "measurement"
+  json_time_key = "time"
+  tag_keys = ["tags_validator_name",
+              "tags_validator_identity_pubkey",
+              "tags_validator_vote_pubkey",
+              "tags_cluster_environment",
+              "validator_id",
+              "validator_name"]
+
+  json_string_fields = [
+            "monitoring_version",
+            "solana_version",
+            "validator_identity_pubkey",
+            "validator_vote_pubkey",
+            "cluster_environment",
+            "cpu_model"]
+
+  json_time_format = "unix_ms"
+
+##OUPUTS
+[[outputs.influxdb]]
+  database = "v_metrics"
+  urls = [ "http://influx.thevalidators.io:8086" ]
+  username = "v_user"
+  password = "thepassword"
+  '  > /etc/telegraf/telegraf.d/thevalidators.conf  
 
 systemctl restart telegraf
 
