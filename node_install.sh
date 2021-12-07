@@ -281,7 +281,7 @@ printf '##INPUTS
 
 [[inputs.exec]]
   commands = [
-               "sudo -i -u solana /home/solana/monitoring/output_starter.sh output_validator_measurements"
+               "sudo -i -u root /root/solana/monitoring/output_starter.sh output_validator_measurements"
              ]
   interval = "30s"
   timeout = "30s"
