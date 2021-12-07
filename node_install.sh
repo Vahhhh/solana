@@ -150,8 +150,7 @@ systemctl restart logrotate.service
 systemctl enable solana.service
 systemctl start solana.service
 
-journalctl -u solana.service
-
+tail -f /root/solana/solana.log
 
 ll /root/solana/ledger/
 
@@ -181,17 +180,32 @@ rm -rf /etc/telegraf/telegraf.conf
 
 # make sure you are the user you run solana with . eq. su - solana
 
-cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/
+cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/mkdir -p /root/tmp_git && \
+cd $_ && git clone https://github.com/Vahhhh/solana/ && \
+cp -r /root/tmp_git/solana/monitoring /root/solana/ && chmod +x /root/solana/monitoring/output_starter.sh
+
 
 # !!! CHANGE THIS NODENAME !!!
 read -p 'Enter nodename for monitoring: ' nodename
 
+printf 'from common import ValidatorConfig
+
+config = ValidatorConfig(
+    validator_name="%s" ,
+    secrets_path="/root/solana",
+    local_rpc_address="http://localhost:8899",
+    remote_rpc_address="https://api.testnet.solana.com",
+    cluster_environment="testnet",
+    debug_mode=False
+)
+' "$nodename" > /root/solana/monitoring/monitoring_config.py && \
+
 
 printf '[agent]
-  hostname = "$nodename" # set this to a name you want to identify your node in the grafana dashboard
+  hostname = "%s" # set this to a name you want to identify your node in the grafana dashboard
   flush_interval = "30s"
   interval = "30s"
-  '  > /etc/telegraf/telegraf.conf && \
+  ' "$nodename" > /etc/telegraf/telegraf.conf && \
 
 # Change config with your nodename
 
@@ -226,7 +240,7 @@ printf '# Input Plugins
   timeout = "30s"
   data_format = "influx"
   data_type = "integer"
-  '  > /etc/telegraf/telegraf.d/solanamonitoring.conf
+  ' > /etc/telegraf/telegraf.d/solanamonitoring.conf
 
 printf '##INPUTS
 [[inputs.cpu]]
