@@ -179,9 +179,9 @@ rm -rf /etc/telegraf/telegraf.conf
 
 # make sure you are the user you run solana with . eq. su - solana
 
-cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/mkdir -p /root/tmp_git && \
-cd $_ && git clone https://github.com/Vahhhh/solana/ && \
-cp -r /root/tmp_git/solana/monitoring /root/solana/ && chmod +x /root/solana/monitoring/output_starter.sh
+cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/ && \
+mkdir -p /root/tmp_git && cd $_ && git clone https://github.com/Vahhhh/solana/ && \
+cp -r /root/tmp_git/solana/monitoring /root/solana/ && chmod +x /root/solana/monitoring/output_starter.sh && cd /root/solana
 
 
 # !!! CHANGE THIS NODENAME !!!
