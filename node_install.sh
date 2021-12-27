@@ -108,6 +108,7 @@ solana create-vote-account ~/solana/vote-account-keypair.json ~/solana/validator
 printf '[Unit]
 Description=Solana TdS node
 After=network.target syslog.target
+Wants=solana-sys-tuner.service
 StartLimitIntervalSec=0
 [Service]
 Type=simple
