@@ -28,6 +28,26 @@ solana --version && \
 solana config set --url https://api.testnet.solana.com && \
 solana transaction-count 
 
+# let's try to test sys-tuner
+printf '[Unit]
+Description=Solana System Tuner Service
+After=network.target syslog.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/home/solana/.local/share/solana/install/active_release/bin/solana-sys-tuner --user root
+
+[Install]
+WantedBy=multi-user.target
+' > /etc/systemd/system/solana-sys-tuner.service
+
+systemctl enable solana-sys-tuner.service
+systemctl start solana-sys-tuner.service
+
+
 bash -c "cat >/etc/sysctl.d/20-solana-udp-buffers.conf <<EOF
 # Increase UDP buffer size
 net.core.rmem_default = 134217728
