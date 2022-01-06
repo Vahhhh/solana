@@ -2,7 +2,7 @@
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/
 
 hostname=solana-1
-solanaversion=v1.8.11
+solanaversion=v1.9.3
 
 apt update -y && apt upgrade -y && apt install curl gnupg git -y
 
@@ -11,7 +11,7 @@ hostname $hostname
 
 ### reconnect
 
-solanaversion=v1.8.11
+solanaversion=v1.9.3
 
 mkdir -p /root/solana
 cd /root/solana
@@ -133,9 +133,9 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --ledger /root/solana/ledger \
 --accounts /mnt/ramdisk/accounts \
 --limit-ledger-size 50000000 \
---dynamic-port-range 8000-8010 \
+--dynamic-port-range 8000-8020 \
 --log /root/solana/solana.log \
---snapshot-interval-slots 1000 \
+--snapshot-interval-slots 2000 \
 --maximum-local-snapshot-age 1000 \
 --snapshot-compression none \
 --private-rpc \
@@ -341,8 +341,8 @@ systemctl restart telegraf
 sudo ufw reset
 
 sudo ufw allow 22/tcp
-sudo ufw allow 8000:10000/tcp
-sudo ufw allow 8000:10000/udp
+sudo ufw allow 8000:8020/tcp
+sudo ufw allow 8000:8020/udp
 
 sudo ufw enable
 
