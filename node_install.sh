@@ -189,7 +189,7 @@ EOF
 
 curl -sL https://repos.influxdata.com/influxdb.key | apt-key add -
 
-apt-get update && apt-get -y install telegraf jq bc && systemctl stop telegraf && apt install python3-pip -y && pip3 install numpy && \
+apt-get update && apt-get -y install telegraf jq bc && systemctl stop telegraf && apt install python3-pip -y && pip3 install numpy requests && \
 
 # make the telegraf user and sudo adm to be able to execute scripts as sol user
 adduser telegraf sudo && \
