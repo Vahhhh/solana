@@ -48,29 +48,6 @@ systemctl enable solana-sys-tuner.service
 systemctl start solana-sys-tuner.service
 
 
-bash -c "cat >/etc/sysctl.d/20-solana-udp-buffers.conf <<EOF
-# Increase UDP buffer size
-net.core.rmem_default = 134217728
-net.core.rmem_max = 134217728
-net.core.wmem_default = 134217728
-net.core.wmem_max = 134217728
-EOF"
-
-bash -c "cat >/etc/sysctl.d/20-solana-mmaps.conf <<EOF
-# Increase memory mapped files limit
-vm.max_map_count = 1000000
-EOF"
-
-bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
-# Increase process file descriptor count limit
-* - nofile 1000000
-EOF"
-
-sysctl -p /etc/sysctl.d/20-solana-udp-buffers.conf
-sysctl -p /etc/sysctl.d/20-solana-mmaps.conf
-systemctl daemon-reload
-
-
 ### Create swapfile if hasn't been created before
 
 # swapfile
@@ -103,7 +80,7 @@ solana config set --keypair ~/solana/validator-keypair.json
 
 solana-keygen new -o ~/solana/vote-account-keypair.json
 
-solana create-vote-account ~/solana/vote-account-keypair.json ~/solana/validator-keypair.json
+solana create-vote-account -v --authorized-withdrawer ~/solana/validator-keypair.json --commission 100 -k ~/solana/validator-keypair.json s ~/solana/vote-account-keypair.json ~/solana/validator-keypair.json
 
 printf '[Unit]
 Description=Solana TdS node
