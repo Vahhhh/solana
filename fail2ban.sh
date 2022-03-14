@@ -12,6 +12,6 @@ backend = auto
 enabled = true
 ' > /etc/fail2ban/jail.local && \
 systemctl enable fail2ban && systemctl restart fail2ban && \
-
+sleep 1 && \
 iptables -nvL && \
 fail2ban-client status sshd
