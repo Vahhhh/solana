@@ -7,7 +7,7 @@ bantime  = 21600
 findtime  = 300
 maxretry = 3
 banaction = iptables-multiport
-backend = systemd
+backend = auto
 [sshd]
 enabled = true
 ' > /etc/fail2ban/jail.local && \
