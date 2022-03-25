@@ -3,8 +3,12 @@
 
 # hostname=solana-1
 # solanaversion=v1.9.9
+cat <<EOF | tee /etc/apt/sources.list.d/influxdata.list
+deb https://repos.influxdata.com/ubuntu bionic stable
+EOF
 
-apt update -y && apt upgrade -y && apt install curl gnupg git -y
+apt update -y && apt install curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
+apt update && apt -y install gnupg git telegraf jq bc python3-pip && systemctl stop telegraf && pip3 install numpy requests && \
 
 echo $hostname > /etc/hostname
 hostname $hostname
@@ -161,24 +165,14 @@ solana catchup /root/solana/validator-keypair.json --our-localhost
 # Monitoring
 
 # install telegraf
-cat <<EOF | tee /etc/apt/sources.list.d/influxdata.list
-deb https://repos.influxdata.com/ubuntu bionic stable
-EOF
-
-curl -sL https://repos.influxdata.com/influxdb.key | apt-key add -
-
-apt-get update && apt-get -y install telegraf jq bc && systemctl stop telegraf && apt install python3-pip -y && pip3 install numpy requests && \
 
 # make the telegraf user and sudo adm to be able to execute scripts as sol user
 adduser telegraf sudo && \
 adduser telegraf adm && \
-echo "telegraf ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-cp /etc/telegraf/telegraf.conf /etc/telegraf/telegraf.conf.orig
-rm -rf /etc/telegraf/telegraf.conf
-
+echo "telegraf ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+cp /etc/telegraf/telegraf.conf /etc/telegraf/telegraf.conf.orig && \
+rm -rf /etc/telegraf/telegraf.conf && \
 # make sure you are the user you run solana with . eq. su - solana
-
 cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/ && \
 mkdir -p /root/tmp_git && cd $_ && git clone https://github.com/Vahhhh/solana/ && \
 cp -r /root/tmp_git/solana/monitoring /root/solana/ && chmod +x /root/solana/monitoring/output_starter.sh && cd /root/solana
