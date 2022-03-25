@@ -2,20 +2,14 @@
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/
 
 # hostname=solana-1
-# solanaversion=v1.9.9
-cat <<EOF | tee /etc/apt/sources.list.d/influxdata.list
-deb https://repos.influxdata.com/ubuntu bionic stable
-EOF
-
-apt update -y && apt install curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
-apt update && apt -y install gnupg git telegraf jq bc python3-pip && systemctl stop telegraf && pip3 install numpy requests && \
-
-echo $hostname > /etc/hostname
-hostname $hostname
-
-### reconnect
+# echo $hostname > /etc/hostname
+# hostname $hostname
 
 solanaversion=v1.10.3
+
+apt update -y && apt install curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
+echo "deb https://repos.influxdata.com/ubuntu bionic stable" >> /etc/apt/sources.list.d/influxdata.list && \
+apt update -y && apt upgrade -y && apt -y install gnupg git telegraf jq bc python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
 mkdir -p /root/solana
 cd /root/solana
