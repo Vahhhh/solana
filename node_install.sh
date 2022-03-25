@@ -11,7 +11,7 @@ hostname $hostname
 
 ### reconnect
 
-solanaversion=v1.9.9
+solanaversion=v1.10.3
 
 mkdir -p /root/solana
 cd /root/solana
