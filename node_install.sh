@@ -9,7 +9,7 @@ solanaversion=v1.10.3
 
 apt update -y && apt install curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
 echo "deb https://repos.influxdata.com/ubuntu bionic stable" >> /etc/apt/sources.list.d/influxdata.list && \
-apt update -y && apt upgrade -y && apt -y install gnupg git telegraf jq bc python3-pip && systemctl stop telegraf && pip3 install numpy requests
+apt update -y && apt upgrade -y && apt -y install gnupg git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
 mkdir -p /root/solana
 cd /root/solana
