@@ -78,7 +78,8 @@ solana config set --keypair ~/solana/validator-keypair.json
 
 solana-keygen new -o ~/solana/vote-account-keypair.json
 
-solana create-vote-account -v --authorized-withdrawer ~/solana/validator-keypair.json --commission 100 -k ~/solana/validator-keypair.json ~/solana/vote-account-keypair.json ~/solana/validator-keypair.json
+solana create-vote-account -v --commission 100 -k ~/solana/validator-keypair.json \
+~/solana/vote-account-keypair.json ~/solana/validator-keypair.json ~/solana/validator-keypair(withdrawer).json
 
 printf '[Unit]
 Description=Solana TdS node
