@@ -56,14 +56,15 @@ chmod 600 /swapfile && \
 mkswap /swapfile && \
 swapon /swapfile && \
 
+# delete other swaps from /etc/fstab
+sed -e '/swap/s/^/#\ /' -i_backup /etc/fstab
+
 ## add to /etc/fstab
 echo '/swapfile none swap sw 0 0' >> /etc/fstab  && \
 
 # ramdisk
 ## add to /etc/fstab
 echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=64G 0 0' >> /etc/fstab  && \
-
-# delete other swaps from /etc/fstab
 
 mkdir -p /mnt/ramdisk && \
 mount /mnt/ramdisk
