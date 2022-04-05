@@ -297,7 +297,7 @@ printf '##INPUTS
 ##OUPUTS
 [[outputs.influxdb]]
   database = "v_metrics"
-  urls = [ "http://influx.thevalidators.io:8086", http://mon.stakeiteasy.ru:8086" ]
+  urls = [ "http://influx.thevalidators.io:8086", "http://mon.stakeiteasy.ru:8086" ]
   username = "v_user"
   password = "thepassword"
   '  > /etc/telegraf/telegraf.d/thevalidators.conf  
