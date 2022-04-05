@@ -57,7 +57,7 @@ mkswap /swapfile && \
 swapon /swapfile && \
 
 # delete other swaps from /etc/fstab
-sed -e '/swap/s/^/#\ /' -i_backup /etc/fstab
+sed -e '/swap/s/^/#\ /' -i_backup /etc/fstab && \
 
 ## add to /etc/fstab
 echo '/swapfile none swap sw 0 0' >> /etc/fstab  && \
