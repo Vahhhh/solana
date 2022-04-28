@@ -16,6 +16,7 @@
 `solana-keygen pubkey usb://ledger?key=0`
 
 [Мониторинг](https://github.com/stakeconomy/solanamonitoring)
+
 [Мониторинг-новый](https://solana.thevalidators.io/)
 
 [Тут можно посмотреть информацию о стейке](https://kyc-api.vercel.app/api/validators/details?pk=GH1t1LvHefMhw9y7W4LNWWa79HHnB1bQQcXGHaTc18kg&epoch=308)
