@@ -19,4 +19,6 @@
 #When you have time - install and wait for catchup
 #solana-install update && systemctl restart solana && sleep 30 && solana catchup /root/solana/validator-keypair.json --our-localhost
 
-apt install -y screen && screen -AdmS solana /bin/bash -c 'solana-install init 1.10.10 && solana-validator --ledger /root/solana/ledger/ wait-for-restart-window --max-delinquent-stake 10 && systemctl restart solana && err=1; while [ $err -eq 1 ]; do solana catchup /root/solana/validator-keypair.json --our-localhost; err=$?; sleep 5; done'
+apt install -y screen && screen -AdmS solana /bin/bash -c 'solana-install init 1.10.10 && \
+solana-validator --ledger /root/solana/ledger/ wait-for-restart-window --max-delinquent-stake 10 && \
+systemctl restart solana && err=1; while [ $err -eq 1 ]; do solana catchup /root/solana/validator-keypair.json --our-localhost; err=$?; sleep 5; done'
