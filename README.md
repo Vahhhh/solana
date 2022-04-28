@@ -18,7 +18,7 @@
 [Мониторинг](https://github.com/stakeconomy/solanamonitoring)
 [Мониторинг-новый](https://solana.thevalidators.io/)
 
-[Тут можно посмотреть информацию о стейке от stakebot](https://github.com/solana-labs/stake-o-matic/wiki/)
+[Тут можно посмотреть информацию о стейке от stakebot](https://kyc-api.vercel.app/api/validators/details?pk=GH1t1LvHefMhw9y7W4LNWWa79HHnB1bQQcXGHaTc18kg&epoch=308)
 
 [Собираем бинарники Solana из исходников вручную](https://github.com/agjell/sol-tutorials/blob/master/building-solana-from-source.md)
 
