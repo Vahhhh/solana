@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e -x
 # Solana node install v.2.0
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/ 
 # and SecorD0 multitool.sh 0 https://github.com/SecorD0/Monitoring/blob/main/multi_tool.sh
