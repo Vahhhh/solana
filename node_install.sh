@@ -5,7 +5,7 @@
 # echo $hostname > /etc/hostname
 # hostname $hostname
 
-solanaversion=v1.10.11
+solanaversion=v1.10.12
 
 apt update -y && apt install curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
 echo "deb https://repos.influxdata.com/ubuntu bionic stable" >> /etc/apt/sources.list.d/influxdata.list && \
