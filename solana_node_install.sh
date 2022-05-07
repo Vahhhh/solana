@@ -10,11 +10,22 @@ NETWORK=testnet
 SOLANA_PATH="/root/solana"
 IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
+VER_MAINNET=1.9.18
+VER_TESTNET=1.10.12
 
 # Input variables
 
-printf "${C_LGn}Enter the network [mainnet-beta/testnet]:${RES} "
+printf "${C_LGn}Enter the network (mainnet/testnet) [m/T]:${RES} "
 read -r NETWORK
+case "$NETWORK" in
+    [mM]) 
+        NETWORK=mainnet-beta
+        ;;
+    *)
+        NETWORK=testnet
+        ;;
+esac
+
 printf "${C_LGn}Enter the software version [1.10.12]:${RES} "
 read -r SOLANAVERSION
 
