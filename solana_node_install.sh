@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e -x
+set -e -x -v
 # Solana node install v.2.0
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/ 
 # and SecorD0 multitool.sh 0 https://github.com/SecorD0/Monitoring/blob/main/multi_tool.sh
@@ -59,7 +59,7 @@ cd /root/solana
 ### or by copying the file from another host by SCP for example
 ### if you are making reinstall, then add also ~/solana/vote-account-keypair.json and don't create it later again!
 
-sh -c "$(curl -sSfL https://release.solana.com/$SOLANAVERSION/install)" && \
+sh -c "$(curl -sSfL https://release.solana.com/v$SOLANAVERSION/install)" && \
 export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 
 solana config set --url https://api.$NETWORK.solana.com
