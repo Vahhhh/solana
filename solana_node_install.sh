@@ -30,7 +30,7 @@ printf "${C_LGn}Enter the software version [1.10.12]:${RES} "
 read -r SOLANAVERSION
 
 printf "${C_LGn}Enter the nodename [node-main]:${RES} "
-read -r NODENAME$
+read -r NODENAME
 
 mkdir -p $SOLANA_PATH
 if [ ! -f "$IDENTITY_PATH" ]; then
