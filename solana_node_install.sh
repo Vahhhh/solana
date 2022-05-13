@@ -32,6 +32,7 @@ read -r SOLANAVERSION
 printf "${C_LGn}Enter the nodename [node-main]:${RES} "
 read -r NODENAME
 
+
 mkdir -p $SOLANA_PATH
 if [ ! -f "$IDENTITY_PATH" ]; then
 printf "${C_LR}Enter your identity private key, the output will not be shown [1,2,3,4,5,6,7,etc]:${RES} "
