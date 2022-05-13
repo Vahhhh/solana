@@ -200,7 +200,7 @@ echo '/swapfile none swap sw 0 0' >> /etc/fstab
 
 # ramdisk
 ## add to /etc/fstab
-echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size=$SWAPSIZEG 0 0' >> /etc/fstab
+echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size='$SWAPSIZE'G 0 0' >> /etc/fstab
 
 mkdir -p /mnt/ramdisk
 mount /mnt/ramdisk
