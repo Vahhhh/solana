@@ -215,6 +215,15 @@ systemctl restart logrotate.service
 systemctl enable solana.service
 systemctl start solana.service
 
+adduser telegraf sudo && \
+adduser telegraf adm && \
+echo "telegraf ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+cp /etc/telegraf/telegraf.conf /etc/telegraf/telegraf.conf.orig && \
+rm -rf /etc/telegraf/telegraf.conf && \
+# make sure you are the user you run solana with . eq. su - solana
+cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/ && \
+mkdir -p /root/tmp_git && cd $_ && git clone https://github.com/Vahhhh/solana/ && \
+cp -r /root/tmp_git/solana/monitoring /root/solana/ && chmod +x /root/solana/monitoring/output_starter.sh && cd /root/solana
 
 printf 'from common import ValidatorConfig
 config = ValidatorConfig(
