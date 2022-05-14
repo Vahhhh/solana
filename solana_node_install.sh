@@ -234,14 +234,14 @@ config = ValidatorConfig(
     cluster_environment="$NETWORK",
     debug_mode=False
 )
-' "$NODENAME" > /root/solana/monitoring/monitoring_config.py && \
+' "$NODENAME" > /root/solana/monitoring/monitoring_config.py
 
 
 printf '[agent]
   hostname = "%s" # set this to a name you want to identify your node in the grafana dashboard
   flush_interval = "30s"
   interval = "30s"
-  ' "$NODENAME" > /etc/telegraf/telegraf.conf && \
+  ' "$NODENAME" > /etc/telegraf/telegraf.conf
 
 # Change config with your nodename
 
