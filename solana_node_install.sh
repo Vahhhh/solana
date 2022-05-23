@@ -26,7 +26,7 @@ case "$NETWORK" in
         ;;
 esac
 
-printf "${C_LGn}Enter the software version [1.10.12]:${RES} "
+printf "${C_LGn}Enter the software version [1.9.22]:${RES} "
 read -r SOLANAVERSION
 
 printf "${C_LGn}Enter the nodename [node-main]:${RES} "
@@ -53,11 +53,6 @@ echo "deb https://repos.influxdata.com/ubuntu bionic stable" >> /etc/apt/sources
 apt-get update -y && apt-get upgrade -y && apt-get -y install gnupg git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
 cd /root/solana
-
-### add the file ~/solana/validator-keypair.json by
-### nano ~/solana/validator-keypair.json and COPY-PASTE
-### or by copying the file from another host by SCP for example
-### if you are making reinstall, then add also ~/solana/vote-account-keypair.json and don't create it later again!
 
 sh -c "$(curl -sSfL https://release.solana.com/v$SOLANAVERSION/install)" && \
 export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
