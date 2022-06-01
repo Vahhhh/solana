@@ -204,7 +204,7 @@ swapon $SWAP_PATH
 sed -e '/swap/s/^/#\ /' -i_backup /etc/fstab
 
 ## add to /etc/fstab
-echo '$SWAP_PATH none swap sw 0 0' >> /etc/fstab
+echo $SWAP_PATH ' none swap sw 0 0' >> /etc/fstab
 
 # ramdisk
 ## add to /etc/fstab
