@@ -30,7 +30,10 @@ case "$NETWORK" in
 esac
 
 printf "${C_LGn}Enter the software version [1.9.25]:${RES} "
-read -r SOLANAVERSION
+read -r SOLANAVERSION_INPUT
+if [ -n "$SOLANAVERSION_INPUT" ]; then
+echo $SOLANAVERSION_INPUT > $SOLANAVERSION
+fi
 
 printf "${C_LGn}Enter the nodename [node-main]:${RES} "
 read -r NODENAME
