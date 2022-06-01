@@ -23,13 +23,15 @@ read -r NETWORK
 case "$NETWORK" in
     [mM]) 
         NETWORK=mainnet-beta
+        SOLANAVERSION=$VER_MAINNET
         ;;
     *)
         NETWORK=testnet
+        SOLANAVERSION=$VER_TESTNET
         ;;
 esac
 
-printf "${C_LGn}Enter the software version [1.9.25]:${RES} "
+printf "${C_LGn}Enter the software version [$SOLANAVERSION]:${RES} "
 read -r SOLANAVERSION_INPUT
 if [ -n "$SOLANAVERSION_INPUT" ]; then
 echo $SOLANAVERSION_INPUT > $SOLANAVERSION
