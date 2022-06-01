@@ -40,10 +40,10 @@ fi
 printf "${C_LGn}Enter the nodename [node-main]:${RES} "
 read -r NODENAME
 
-printf "${C_LGn}Enter SWAP full path [/swapfile]:${RES} "
+printf "${C_LGn}Enter SWAP full path [$SWAP_PATH]:${RES} "
 read -r SWAP_INPUT
 if [ -n "$SWAP_INPUT" ]; then
-echo $SWAP_INPUT > $SWAP_PATH
+SWAP_PATH=$SWAP_INPUT
 fi
 
 mkdir -p $SOLANA_PATH
