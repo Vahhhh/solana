@@ -14,6 +14,7 @@ IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
 VER_MAINNET=1.9.25
 VER_TESTNET=1.10.20
+SWAP_PATH="/swapfile"
 
 # Input variables
 
@@ -34,6 +35,11 @@ read -r SOLANAVERSION
 printf "${C_LGn}Enter the nodename [node-main]:${RES} "
 read -r NODENAME
 
+printf "${C_LGn}Enter SWAP full path [/swapfile]:${RES} "
+read -r SWAP_INPUT
+if [ -n "$SWAP_INPUT" ]; then
+echo $SWAP_INPUT > $SWAP_PATH
+fi
 
 mkdir -p $SOLANA_PATH
 if [ ! -f "$IDENTITY_PATH" ]; then
@@ -184,16 +190,16 @@ cat > /root/solana/solana.logrotate <<EOF
 EOF
 
 swapoff -a
-dd if=/dev/zero of=/swapfile bs=1G count=$SWAPSIZE
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
+dd if=/dev/zero of=$SWAP_PATH bs=1G count=$SWAPSIZE
+chmod 600 $SWAP_PATH
+mkswap $SWAP_PATH
+swapon $SWAP_PATH
 
 # delete other swaps from /etc/fstab
 sed -e '/swap/s/^/#\ /' -i_backup /etc/fstab
 
 ## add to /etc/fstab
-echo '/swapfile none swap sw 0 0' >> /etc/fstab
+echo '$SWAP_PATH none swap sw 0 0' >> /etc/fstab
 
 # ramdisk
 ## add to /etc/fstab
