@@ -238,8 +238,8 @@ config = ValidatorConfig(
     validator_name="%s" ,
     secrets_path="/root/solana",
     local_rpc_address="http://localhost:8899",
-    remote_rpc_address="https://api.$NETWORK.solana.com",
-    cluster_environment="$NETWORK",
+    remote_rpc_address="https://api.'$NETWORK'.solana.com",
+    cluster_environment="'$NETWORK'",
     debug_mode=False
 )
 ' "$NODENAME" > /root/solana/monitoring/monitoring_config.py
