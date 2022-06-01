@@ -1,4 +1,6 @@
 #!/bin/bash
+# run by 
+# . <(wget -qO- https://raw.githubusercontent.com/Vahhhh/solana/main/solana_node_install.sh)
 set -e -x -v
 # Solana node install v.2.0
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/ 
@@ -26,7 +28,7 @@ case "$NETWORK" in
         ;;
 esac
 
-printf "${C_LGn}Enter the software version [1.9.22]:${RES} "
+printf "${C_LGn}Enter the software version [1.9.25]:${RES} "
 read -r SOLANAVERSION
 
 printf "${C_LGn}Enter the nodename [node-main]:${RES} "
