@@ -34,7 +34,7 @@ esac
 printf "${C_LGn}Enter the software version [$SOLANAVERSION]:${RES} "
 read -r SOLANAVERSION_INPUT
 if [ -n "$SOLANAVERSION_INPUT" ]; then
-echo $SOLANAVERSION_INPUT > $SOLANAVERSION
+SOLANAVERSION=$SOLANAVERSION_INPUT
 fi
 
 printf "${C_LGn}Enter the nodename [node-main]:${RES} "
