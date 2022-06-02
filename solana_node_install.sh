@@ -194,27 +194,36 @@ cat > /root/solana/solana.logrotate <<EOF
 }
 EOF
 
-swapoff -a
-dd if=/dev/zero of=$SWAP_PATH bs=1G count=$SWAPSIZE
-chmod 600 $SWAP_PATH
-mkswap $SWAP_PATH
-swapon $SWAP_PATH
+if [ ! -f $SWAP_PATH ]; then
+    swapoff -a
+    dd if=/dev/zero of=$SWAP_PATH bs=1G count=$SWAPSIZE
+    chmod 600 $SWAP_PATH
+    mkswap $SWAP_PATH
+    swapon $SWAP_PATH
 
-# delete other swaps from /etc/fstab
-sed -e '/swap/s/^/#\ /' -i_backup /etc/fstab
+    # delete other swaps from /etc/fstab
+    sed -e '/swap/s/^/#\ /' -i_backup /etc/fstab
 
-## add to /etc/fstab
-echo $SWAP_PATH ' none swap sw 0 0' >> /etc/fstab
+    ## add to /etc/fstab
+    echo $SWAP_PATH ' none swap sw 0 0' >> /etc/fstab
+fi
 
-# ramdisk
-## add to /etc/fstab
-echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size='$SWAPSIZE'G 0 0' >> /etc/fstab
+if [ ! -d "/mnt/ramdisk" ]; then
+    # ramdisk
+    ## add to /etc/fstab
+    echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size='$SWAPSIZE'G 0 0' >> /etc/fstab
 
-mkdir -p /mnt/ramdisk
-mount /mnt/ramdisk
+    mkdir -p /mnt/ramdisk
+    mount /mnt/ramdisk
+fi
 
-ln -s /root/solana/solana.service /etc/systemd/system
-ln -s /root/solana/solana.logrotate /etc/logrotate.d/
+if [ ! -f "/etc/systemd/system/solana.service" ]; then
+    ln -s /root/solana/solana.service /etc/systemd/system
+fi
+
+if [ ! -f "/etc/logrotate.d/solana.logrotate" ]; then
+    ln -s /root/solana/solana.logrotate /etc/logrotate.d/
+fi
 
 systemctl daemon-reload
 
