@@ -5,7 +5,7 @@
 # echo $hostname > /etc/hostname
 # hostname $hostname
 
-solanaversion=v1.10.17
+solanaversion=v1.10.26
 
 apt update -y && apt install curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
 echo "deb https://repos.influxdata.com/ubuntu bionic stable" >> /etc/apt/sources.list.d/influxdata.list && \
@@ -338,7 +338,7 @@ sudo ufw enable
 
 #### donate if it was helpful
 
-SOL - `2Y4C2e5d6bUY1nb5mqFfkSCyAt39K7cYEim2gD7vAtKC`
+SOL - `vah.sol`
 
 LTC - `MAaitfT32P9CZdQApTf6Mm4WZygakkGmg6`
 
