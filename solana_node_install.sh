@@ -1,8 +1,8 @@
 #!/bin/bash
 # run by 
 # . <(wget -qO- https://raw.githubusercontent.com/Vahhhh/solana/main/solana_node_install.sh)
-set -e -x -v
-# Solana node install v.2.1
+#set -e -x -v
+# Solana node install v.2.2
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/ 
 # and SecorD0 multitool.sh 0 https://github.com/SecorD0/Monitoring/blob/main/multi_tool.sh
 
@@ -12,8 +12,8 @@ NETWORK=testnet
 SOLANA_PATH="/root/solana"
 IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
-VER_MAINNET=1.10.26
-VER_TESTNET=1.10.27
+VER_MAINNET=1.10.32
+VER_TESTNET=1.10.32
 SWAP_PATH="/swapfile"
 
 # Input variables
