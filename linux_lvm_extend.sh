@@ -1,4 +1,4 @@
-
+echo 1>/sys/class/block/sda/device/rescan
 parted -s /dev/sda "resizepart 3 100%" quit
 pvresize /dev/sda3
 pvscan
