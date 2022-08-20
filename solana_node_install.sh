@@ -93,7 +93,8 @@ systemctl enable solana-sys-tuner.service
 systemctl start solana-sys-tuner.service
 
 if [ "$NETWORK" == "mainnet-beta" ]; then
-SWAPSIZE=128
+SWAPSIZE=300
+SWAPSIZE2=250
 printf '[Unit]
 Description=Solana Mainnet node
 After=network.target syslog.target
@@ -138,7 +139,8 @@ WantedBy=multi-user.target
 ' > /root/solana/solana.service
 
 elif [ "$NETWORK" == "testnet" ]; then
-SWAPSIZE=64
+SWAPSIZE=160
+SWAPSIZE2=120
 printf '[Unit]
 Description=Solana TdS node
 After=network.target syslog.target
@@ -212,7 +214,7 @@ fi
 if [ ! -d "/mnt/ramdisk" ]; then
     # ramdisk
     ## add to /etc/fstab
-    echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size='$SWAPSIZE'G 0 0' >> /etc/fstab
+    echo 'tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,size='$SWAPSIZE2'G 0 0' >> /etc/fstab
 
     mkdir -p /mnt/ramdisk
     mount /mnt/ramdisk
