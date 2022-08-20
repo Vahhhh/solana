@@ -51,6 +51,7 @@ if [ ! -f "$IDENTITY_PATH" ]; then
 printf "${C_LR}Enter your identity private key, the output will not be shown [1,2,3,4,5,6,7,etc]:${RES} "
 read -r -s IDENTITY_DATA
 echo $IDENTITY_DATA > $IDENTITY_PATH
+echo
 fi
 if [ ! -f "$VOTE_PATH" ]; then
 printf "${C_LR}Enter your vote private key, the output will not be shown [1,2,3,4,5,6,7,etc]:${RES} "
