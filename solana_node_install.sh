@@ -12,8 +12,8 @@ NETWORK=testnet
 SOLANA_PATH="/root/solana"
 IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
-VER_MAINNET=1.10.35
-VER_TESTNET=1.11.6
+VER_MAINNET=1.10.39
+VER_TESTNET=1.14.2
 SWAP_PATH="/swapfile"
 
 # Input variables
@@ -131,8 +131,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --snapshot-compression none \
 --private-rpc \
 --rpc-port 8899 \
---full-rpc-api \
---accounts-db-caching-enabled
+--full-rpc-api
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
@@ -179,7 +178,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --snapshot-compression none \
 --private-rpc \
 --rpc-port 8899 \
---accounts-db-caching-enabled
+--full-rpc-api
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
