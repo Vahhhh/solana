@@ -62,9 +62,9 @@ fi
 
 #: ${value2:=$default1}
 
-apt-get update -y && apt-get install curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
+apt-get update -y && apt-get install gnupg curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
 echo "deb https://repos.influxdata.com/ubuntu bionic stable" >> /etc/apt/sources.list.d/influxdata.list && \
-apt-get update -y && apt-get upgrade -y && apt-get -y install gnupg git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
+apt-get update -y && apt-get upgrade -y && apt-get -y install git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
 cd /root/solana
 
