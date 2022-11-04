@@ -66,6 +66,7 @@ if [ ! -f "$VOTE_PATH1" ]; then
 printf "${C_LR}Enter your vote private key, the output will not be shown [1,2,3,4,5,6,7,etc]:${RES} "
 read -r -s VOTE_DATA1
 echo $VOTE_DATA1 > $VOTE_PATH1
+echo
 fi
 
 mkdir -p $SOLANA_PATH2
@@ -79,6 +80,7 @@ if [ ! -f "$VOTE_PATH2" ]; then
 printf "${C_LR}Enter your vote private key, the output will not be shown [1,2,3,4,5,6,7,etc]:${RES} "
 read -r -s VOTE_DATA2
 echo $VOTE_DATA1 > $VOTE_PATH2
+echo
 fi
 
 
@@ -203,7 +205,6 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
 WantedBy=multi-user.target
 ' > /root/solana/solana2/solana2.service
-
 fi
 
 cat > /root/solana/solana.logrotate <<EOF
@@ -396,13 +397,40 @@ printf '##INPUTS
   password = "thepassword"
   '  > /etc/telegraf/telegraf.d/thevalidators.conf  
 
+
+# create telegraf 2
+printf '[Unit]
+Description=Telegraf2
+Documentation=https://github.com/influxdata/telegraf
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/default/telegraf
+User=telegraf
+ExecStart=/usr/bin/telegraf -config /etc/telegraf/telegraf2.conf -config-directory /etc/telegraf/telegraf2.d $TELEGRAF_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartForceExitStatus=SIGPIPE
+KillMode=control-group
+
+[Install]
+WantedBy=multi-user.target
+
+' > /etc/systemd/system/telegraf2.service
+
+systemctl enable telegraf2.service
+systemctl start telegraf2.service
+
 cd /root/solana/solana2 && git clone https://github.com/stakeconomy/solanamonitoring/ && \
-cp -r /root/tmp_git/solana/monitoring /root/solana/solana2/ && chmod +x /root/solana/solana2/monitoring/output_starter.sh && cd /root/solana/solana2
+cp -r /root/tmp_git/solana/monitoring /root/solana/solana2/ && chmod +x /root/solana/solana2/monitoring/output_starter.sh && \
+mkdir /etc/telegraf/telegraf2.d && cd /root/solana/solana2
 
 printf 'from common import ValidatorConfig
 config = ValidatorConfig(
     validator_name="%s" ,
-    secrets_path="/root/solana",
+    secrets_path="/root/solana/solana2",
     local_rpc_address="http://localhost:8899",
     remote_rpc_address="https://api.'$NETWORK'.solana.com",
     cluster_environment="'$NETWORK'",
@@ -448,7 +476,7 @@ printf '# Input Plugins
   timeout = "30s"
   data_format = "influx"
   data_type = "integer"
-  ' > /etc/telegraf/telegraf.d/solanamonitoring2.conf
+  ' > /etc/telegraf/telegraf2.d/solanamonitoring2.conf
 
 printf '##INPUTS
 [[inputs.cpu]]
@@ -505,9 +533,10 @@ printf '##INPUTS
   urls = [ "http://influx.thevalidators.io:8086", "http://mon.stakeiteasy.ru:8086" ]
   username = "v_user"
   password = "thepassword"
-  '  > /etc/telegraf/telegraf.d/thevalidators2.conf 
+  '  > /etc/telegraf/telegraf2.d/thevalidators2.conf 
 
 systemctl restart telegraf
+systemctl restart telegraf2
 
 apt-get -y install fail2ban iptables
 
