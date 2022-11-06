@@ -224,7 +224,7 @@ cat > /root/solana/solana2/solana2.logrotate <<EOF
   daily
   missingok
   postrotate
-    systemctl kill -s USR1 solana.service
+    systemctl kill -s USR1 solana2.service
   endscript
 }
 EOF
