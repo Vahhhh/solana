@@ -76,24 +76,27 @@ export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 solana config set --url https://api.$NETWORK.solana.com
 solana config set --keypair /root/solana/validator-keypair.json
 
-# let's try to test sys-tuner
-printf '[Unit]
-Description=Solana System Tuner Service
-After=network.target syslog.target
-StartLimitIntervalSec=0
+bash -c "cat >/etc/sysctl.d/21-solana-validator.conf <<EOF
+# Increase UDP buffer sizes
+net.core.rmem_default = 134217728
+net.core.rmem_max = 134217728
+net.core.wmem_default = 134217728
+net.core.wmem_max = 134217728
 
-[Service]
-Type=simple
-Restart=always
-RestartSec=1
-ExecStart=/root/.local/share/solana/install/active_release/bin/solana-sys-tuner --user root
+# Increase memory mapped files limit
+vm.max_map_count = 1000000
 
-[Install]
-WantedBy=multi-user.target
-' > /etc/systemd/system/solana-sys-tuner.service
+# Increase number of allowed open file descriptors
+fs.nr_open = 1000000
+EOF"
 
-systemctl enable solana-sys-tuner.service
-systemctl start solana-sys-tuner.service
+sysctl -p /etc/sysctl.d/21-solana-validator.conf
+
+bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
+# Increase process file descriptor count limit
+* - nofile 1000000
+EOF"
+
 
 if [ "$NETWORK" == "mainnet-beta" ]; then
 SWAPSIZE=300
@@ -146,7 +149,6 @@ SWAPSIZE2=120
 printf '[Unit]
 Description=Solana TdS node
 After=network.target syslog.target
-Wants=solana-sys-tuner.service
 StartLimitIntervalSec=0
 [Service]
 Type=simple
