@@ -66,7 +66,8 @@ echo ""
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8FF8E1F7DF8B07E
 
 apt-get update -y && apt-get install gnupg curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
-curl -sL https://repos.influxdata.com/influxdata-archive_compat.key | apt-key add - && \ echo "deb https://repos.influxdata.com/ubuntu bionic stable" >> /etc/apt/sources.list.d/influxdata.list && \
+curl -sL https://repos.influxdata.com/influxdata-archive_compat.key | apt-key add - && \ 
+echo "deb https://repos.influxdata.com/ubuntu bionic stable" >> /etc/apt/sources.list.d/influxdata.list && \
 apt-get update -y && apt-get upgrade -y && apt-get -y install git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
 cd /root/solana
