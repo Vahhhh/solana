@@ -86,17 +86,17 @@ net.core.wmem_default = 134217728
 net.core.wmem_max = 134217728
 
 # Increase memory mapped files limit
-vm.max_map_count = 1000000
+vm.max_map_count = 2048000
 
 # Increase number of allowed open file descriptors
-fs.nr_open = 1000000
+fs.nr_open = 2048000
 EOF"
 
 sysctl -p /etc/sysctl.d/21-solana-validator.conf
 
 bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
 # Increase process file descriptor count limit
-* - nofile 1000000
+* - nofile 2048000
 EOF"
 
 
@@ -111,7 +111,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-LimitNOFILE=1000000
+LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
 --entrypoint entrypoint.mainnet-beta.solana.com:8001 \
@@ -155,7 +155,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-LimitNOFILE=1000000
+LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
 --entrypoint entrypoint3.testnet.solana.com:8001 \
