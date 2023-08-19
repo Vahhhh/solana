@@ -13,7 +13,7 @@ SOLANA_PATH="/root/solana"
 IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
 VER_MAINNET=1.14.23
-VER_TESTNET=1.16.7
+VER_TESTNET=1.14.24
 SWAP_PATH="/swapfile"
 
 # Input variables
@@ -78,27 +78,7 @@ export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 solana config set --url https://api.$NETWORK.solana.com
 solana config set --keypair /root/solana/validator-keypair.json
 
-bash -c "cat >/etc/sysctl.d/21-solana-validator.conf <<EOF
-# Increase UDP buffer sizes
-net.core.rmem_default = 134217728
-net.core.rmem_max = 134217728
-net.core.wmem_default = 134217728
-net.core.wmem_max = 134217728
-
-# Increase memory mapped files limit
-vm.max_map_count = 2048000
-
-# Increase number of allowed open file descriptors
-fs.nr_open = 2048000
-EOF"
-
-sysctl -p /etc/sysctl.d/21-solana-validator.conf
-
-bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
-# Increase process file descriptor count limit
-* - nofile 2048000
-EOF"
-
+wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
 
 if [ "$NETWORK" == "mainnet-beta" ]; then
 SWAPSIZE=300
@@ -131,7 +111,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --accounts /mnt/ramdisk/accounts \
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8020 \
---log /root/solana/solana.log \
+--log /dev/null \
 --minimal-snapshot-download-speed 20000000 \
 --maximum-local-snapshot-age 10000 \
 --snapshot-compression none \
@@ -175,7 +155,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --accounts /mnt/ramdisk/accounts \
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8020 \
---log /root/solana/solana.log \
+--log /dev/null \
 --minimal-snapshot-download-speed 20000000 \
 --maximum-local-snapshot-age 10000 \
 --snapshot-compression none \
