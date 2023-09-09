@@ -12,8 +12,8 @@ NETWORK=testnet
 SOLANA_PATH="/root/solana"
 IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
-VER_MAINNET=1.14.23
-VER_TESTNET=1.14.24
+VER_MAINNET=1.14.27
+VER_TESTNET=1.16.12
 SWAP_PATH="/swapfile"
 
 # Input variables
