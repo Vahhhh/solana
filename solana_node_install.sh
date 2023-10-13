@@ -354,6 +354,7 @@ enabled = true
 
 if [ ! -f "/var/log/auth.log" ]; then
 apt-get install -y rsyslog
+touch /var/log/auth.log
 fi
 
 systemctl enable fail2ban && systemctl restart fail2ban
