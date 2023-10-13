@@ -12,8 +12,8 @@ NETWORK=testnet
 SOLANA_PATH="/root/solana"
 IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
-VER_MAINNET=1.14.27
-VER_TESTNET=1.16.12
+VER_MAINNET=1.16.15
+VER_TESTNET=1.17.1
 SWAP_PATH="/swapfile"
 
 # Input variables
@@ -108,13 +108,14 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --identity /root/solana/validator-keypair.json \
 --vote-account /root/solana/vote-account-keypair.json \
 --ledger /root/solana/ledger \
---accounts /mnt/ramdisk/accounts \
+--accounts /root/solana/accounts \
+--accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
+--accounts-index-path /mnt/ramdisk/accounts_index \
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8020 \
 --log /dev/null \
 --minimal-snapshot-download-speed 20000000 \
---maximum-local-snapshot-age 10000 \
---snapshot-compression none \
+--maximum-local-snapshot-age 3000 \
 --private-rpc \
 --rpc-port 8899 \
 --full-rpc-api
@@ -141,7 +142,6 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --entrypoint entrypoint3.testnet.solana.com:8001 \
 --entrypoint entrypoint2.testnet.solana.com:8001 \
 --entrypoint entrypoint.testnet.solana.com:8001 \
---entrypoint api.testnet.solana.com:8001 \
 --known-validator 5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on \
 --known-validator dDzy5SR3AXdYWVqbDEkVFdvSPCtS9ihF5kJkHCtXoFs \
 --known-validator Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN \
@@ -152,13 +152,14 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --identity /root/solana/validator-keypair.json \
 --vote-account /root/solana/vote-account-keypair.json \
 --ledger /root/solana/ledger \
---accounts /mnt/ramdisk/accounts \
+--accounts /root/solana/accounts \
+--accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
+--accounts-index-path /mnt/ramdisk/accounts_index \
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8020 \
---log /dev/null \
+--log /root/solana/solana.log \
 --minimal-snapshot-download-speed 20000000 \
---maximum-local-snapshot-age 10000 \
---snapshot-compression none \
+--maximum-local-snapshot-age 2000 \
 --private-rpc \
 --rpc-port 8899 \
 --full-rpc-api
@@ -350,6 +351,10 @@ backend = auto
 [sshd]
 enabled = true
 ' > /etc/fail2ban/jail.local
+
+if [ ! -f "/var/log/auth.log" ]; then
+apt-get install -y rsyslog
+fi
 
 systemctl enable fail2ban && systemctl restart fail2ban
 sleep 1
