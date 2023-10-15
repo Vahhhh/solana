@@ -1,4 +1,5 @@
 #!/bin/bash
+# wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
 
 bash -c "cat >/etc/sysctl.d/21-solana-validator.conf <<EOF
 # Increase UDP buffer sizes
