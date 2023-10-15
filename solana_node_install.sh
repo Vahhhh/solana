@@ -108,6 +108,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --identity /root/solana/validator-keypair.json \
 --vote-account /root/solana/vote-account-keypair.json \
 --ledger /root/solana/ledger \
+--snapshots /root/solana/snapshots \
 --accounts /root/solana/accounts \
 --accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --accounts-index-path /mnt/ramdisk/accounts_index \
@@ -152,6 +153,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --identity /root/solana/validator-keypair.json \
 --vote-account /root/solana/vote-account-keypair.json \
 --ledger /root/solana/ledger \
+--snapshots /root/solana/snapshots \
 --accounts /root/solana/accounts \
 --accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --accounts-index-path /mnt/ramdisk/accounts_index \
