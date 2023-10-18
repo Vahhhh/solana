@@ -13,7 +13,7 @@ SOLANA_PATH="/root/solana"
 IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
 VER_MAINNET=1.16.17
-VER_TESTNET=1.17.1
+VER_TESTNET=1.17.2
 SWAP_PATH="/swapfile"
 
 # Input variables
@@ -170,6 +170,10 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
 WantedBy=multi-user.target
 ' > /root/solana/solana.service
+fi
+
+if [ "$SOLANAVERSION" == "1.16.17" ]; then
+cp /root/solana/solana.service /root/solana/solana.service.$(date '+%Y-%m-%d') && curl https://raw.githubusercontent.com/Vahhhh/solana/main/config_main/solana.service.1.16.17 > /root/solana/solana.service
 fi
 
 cat > /root/solana/solana.logrotate <<EOF
