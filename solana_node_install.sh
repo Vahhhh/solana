@@ -94,6 +94,7 @@ RestartSec=1
 LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
+--no-skip-initial-accounts-db-clean \
 --entrypoint entrypoint.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint3.mainnet-beta.solana.com:8001 \
@@ -140,6 +141,7 @@ RestartSec=1
 LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
+--no-skip-initial-accounts-db-clean \
 --entrypoint entrypoint3.testnet.solana.com:8001 \
 --entrypoint entrypoint2.testnet.solana.com:8001 \
 --entrypoint entrypoint.testnet.solana.com:8001 \
@@ -172,9 +174,9 @@ WantedBy=multi-user.target
 ' > /root/solana/solana.service
 fi
 
-if [ "$SOLANAVERSION" == "1.16.17" ]; then
-cp /root/solana/solana.service /root/solana/solana.service.$(date '+%Y-%m-%d') && curl https://raw.githubusercontent.com/Vahhhh/solana/main/config_main/solana.service.1.16.17 > /root/solana/solana.service
-fi
+#if [ "$SOLANAVERSION" == "1.16.17" ]; then
+#cp /root/solana/solana.service /root/solana/solana.service.$(date '+%Y-%m-%d') && curl https://raw.githubusercontent.com/Vahhhh/solana/main/config_main/solana.service.1.16.17 > /root/solana/solana.service
+#fi
 
 cat > /root/solana/solana.logrotate <<EOF
 /root/solana/solana.log {
