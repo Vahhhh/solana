@@ -189,7 +189,7 @@ cat > /root/solana/solana.logrotate <<EOF
 }
 EOF
 
-if [ ! -f $SWAP_PATH ]; then
+#if [ ! -f $SWAP_PATH ]; then
     swapoff -a
     dd if=/dev/zero of=$SWAP_PATH bs=1G count=$SWAPSIZE
     chmod 600 $SWAP_PATH
@@ -201,7 +201,7 @@ if [ ! -f $SWAP_PATH ]; then
 
     ## add to /etc/fstab
     echo $SWAP_PATH ' none swap sw 0 0' >> /etc/fstab
-fi
+#fi
 
 if [ ! -d "/mnt/ramdisk" ]; then
     # ramdisk
