@@ -12,8 +12,8 @@ NETWORK=testnet
 SOLANA_PATH="/root/solana"
 IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
-VER_MAINNET=1.16.17
-VER_TESTNET=1.17.2
+VER_MAINNET=1.16.18
+VER_TESTNET=1.17.3
 SWAP_PATH="/swapfile"
 
 # Input variables
@@ -111,11 +111,9 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --ledger /root/solana/ledger \
 --snapshots /root/solana/snapshots \
 --accounts /root/solana/accounts \
---accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
---accounts-index-path /mnt/ramdisk/accounts_index \
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8020 \
---log /dev/null \
+--log /root/solana/solana.log \
 --minimal-snapshot-download-speed 20000000 \
 --maximum-local-snapshot-age 3000 \
 --private-rpc \
@@ -126,6 +124,9 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
 WantedBy=multi-user.target
 ' > /root/solana/solana.service
+
+# --accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
+# --accounts-index-path /mnt/ramdisk/accounts_index \
 
 elif [ "$NETWORK" == "testnet" ]; then
 SWAPSIZE=160
@@ -157,8 +158,6 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --ledger /root/solana/ledger \
 --snapshots /root/solana/snapshots \
 --accounts /root/solana/accounts \
---accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
---accounts-index-path /mnt/ramdisk/accounts_index \
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8020 \
 --log /root/solana/solana.log \
