@@ -177,6 +177,18 @@ fi
 #cp /root/solana/solana.service /root/solana/solana.service.$(date '+%Y-%m-%d') && curl https://raw.githubusercontent.com/Vahhhh/solana/main/config_main/solana.service.1.16.17 > /root/solana/solana.service
 #fi
 
+printf "${C_LGn}Enter the swap size [$SWAPSIZE]:${RES} "
+read -r SWAPSIZE_INPUT
+if [ -n "$SWAPSIZE_INPUT" ]; then
+SWAPSIZE=$SWAPSIZE_INPUT
+fi
+
+printf "${C_LGn}Enter the ramdisk size [$SWAPSIZE2]:${RES} "
+read -r SWAPSIZE2_INPUT
+if [ -n "$SWAPSIZE2_INPUT" ]; then
+SWAPSIZE2=$SWAPSIZE2_INPUT
+fi
+
 cat > /root/solana/solana.logrotate <<EOF
 /root/solana/solana.log {
   rotate 7
