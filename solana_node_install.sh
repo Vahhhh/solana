@@ -9,6 +9,7 @@
 # Default variables
 
 NETWORK=testnet
+CLIENT=solana
 SOLANA_PATH="/root/solana"
 IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
@@ -17,6 +18,17 @@ VER_TESTNET=1.17.7
 SWAP_PATH="/swapfile"
 
 # Input variables
+
+printf "${C_LGn}Enter the Solana client (solana/jito) [S/j]:${RES} "
+read -r CLIENT
+case "$CLIENT" in
+    [jJ]) 
+        CLIENT=jito
+        ;;
+    *)
+        CLIENT=solana
+        ;;
+esac
 
 printf "${C_LGn}Enter the network (mainnet/testnet) [m/T]:${RES} "
 read -r NETWORK
