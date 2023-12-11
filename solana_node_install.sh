@@ -137,6 +137,8 @@ curl -sL https://repos.influxdata.com/influxdata-archive_compat.key | apt-key ad
 echo "deb https://repos.influxdata.com/ubuntu bionic stable" >> /etc/apt/sources.list.d/influxdata.list && \
 apt-get update -y && apt-get upgrade -y && apt-get -y install git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
+wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
+
 if [ "$CLIENT" == "solana" ]; then
 cd /root/solana
 
@@ -145,8 +147,6 @@ export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 
 solana config set --url https://api.$NETWORK.solana.com
 solana config set --keypair /root/solana/validator-keypair.json
-
-wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
 
 if [ "$NETWORK" == "mainnet-beta" ]; then
 printf '[Unit]
