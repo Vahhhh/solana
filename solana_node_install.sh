@@ -273,7 +273,7 @@ Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainn
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
 --no-skip-initial-accounts-db-clean \
 --identity /root/solana/validator-keypair.json \
---vote-account $VOTE_ACCOUNT_ADDRESS \
+--vote-account %s \
 --authorized-voter /root/solana/validator-keypair.json \
 --rpc-port 8899 \
 --entrypoint 184.105.146.35:8000 \
@@ -315,7 +315,7 @@ ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
 WantedBy=multi-user.target
-' > /root/solana/solana.service
+' "$VOTE_ACCOUNT_ADDRESS" > /root/solana/solana.service
 fi
 fi
 
