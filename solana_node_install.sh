@@ -71,6 +71,14 @@ read -r -s VOTE_DATA
 echo $VOTE_DATA > $VOTE_PATH
 fi
 
+if [ "$NETWORK" == "mainnet-beta" ]; then
+SWAPSIZE=300
+SWAPSIZE2=250
+elif [ "$NETWORK" == "testnet" ]; then
+SWAPSIZE=160
+SWAPSIZE2=120
+fi
+
 printf "${C_LGn}Enter the swap size [$SWAPSIZE]:${RES} "
 read -r SWAPSIZE_INPUT
 if [ -n "$SWAPSIZE_INPUT" ]; then
@@ -141,8 +149,6 @@ solana config set --keypair /root/solana/validator-keypair.json
 wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
 
 if [ "$NETWORK" == "mainnet-beta" ]; then
-SWAPSIZE=300
-SWAPSIZE2=250
 printf '[Unit]
 Description=Solana Mainnet node
 After=network.target syslog.target
@@ -189,8 +195,6 @@ WantedBy=multi-user.target
 # --accounts-index-path /mnt/ramdisk/accounts_index \
 
 elif [ "$NETWORK" == "testnet" ]; then
-SWAPSIZE=160
-SWAPSIZE2=120
 printf '[Unit]
 Description=Solana TdS node
 After=network.target syslog.target
