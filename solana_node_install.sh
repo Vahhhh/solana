@@ -1,7 +1,7 @@
 #!/bin/bash
 # run by 
 # . <(wget -qO- https://raw.githubusercontent.com/Vahhhh/solana/main/solana_node_install.sh)
-#set -e -x -v
+set -e -x -v
 # Solana node install v.2.2
 # Made with help of DimAn videos - https://www.youtube.com/c/DimAn_io/ 
 # and SecorD0 multitool.sh 0 https://github.com/SecorD0/Monitoring/blob/main/multi_tool.sh
@@ -257,8 +257,6 @@ echo 'export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"' 
 VOTE_ACCOUNT_ADDRESS=$(solana address -k $VOTE_PATH)
 
 if [ "$NETWORK" == "mainnet-beta" ]; then
-SWAPSIZE=300
-SWAPSIZE2=250
 printf '[Unit]
 Description=Solana Mainnet node
 After=network.target syslog.target
@@ -315,12 +313,7 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
 WantedBy=multi-user.target
 ' > /root/solana/solana.service
-
-elif [ "$NETWORK" == "testnet" ]; then
-
 fi
-
-
 fi
 
 if [ ! -f "/etc/systemd/system/solana.service" ]; then
