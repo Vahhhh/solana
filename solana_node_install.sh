@@ -254,6 +254,9 @@ ln -s /root/.local/share/solana/install/releases/"$TAG" /root/.local/share/solan
 export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 echo 'export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"' >> /root/.bashrc
 
+solana config set --url https://api.$NETWORK.solana.com
+solana config set --keypair /root/solana/validator-keypair.json
+
 VOTE_ACCOUNT_ADDRESS=$(solana address -k $VOTE_PATH)
 
 if [ "$NETWORK" == "mainnet-beta" ]; then
