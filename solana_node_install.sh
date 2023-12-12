@@ -242,7 +242,7 @@ elif [ "$CLIENT" == "jito" ]; then
 TAG=v$SOLANAVERSION-jito
 cd && curl https://sh.rustup.rs -sSf | sh && source $HOME/.cargo/env && \
 rustup component add rustfmt && rustup update && \
-apt-get install libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang cmake make libprotobuf-dev protobuf-compiler && \
+apt-get install -y libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang cmake make libprotobuf-dev protobuf-compiler && \
 
 git clone https://github.com/jito-foundation/jito-solana.git --recurse-submodules && \
 cd jito-solana && \
