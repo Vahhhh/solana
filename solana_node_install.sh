@@ -250,9 +250,10 @@ git checkout tags/$TAG && \
 git submodule update --init --recursive && \
 CI_COMMIT=$(git rev-parse HEAD) scripts/cargo-install-all.sh --validator-only ~/.local/share/solana/install/releases/"$TAG"
 
-ln -s /root/.local/share/solana/install/releases/"$TAG" /root/.local/share/solana/install/active_release
+ln -snf /root/.local/share/solana/install/releases/"$TAG" /root/.local/share/solana/install/active_release
 export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
-echo 'export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"' >> /root/.bashrc
+echo 'export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"' >> /root/.profile
+source ~/.profile
 
 solana config set --url https://api.$NETWORK.solana.com
 solana config set --keypair /root/solana/validator-keypair.json
