@@ -287,6 +287,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --accounts /root/solana/accounts \
 --dynamic-port-range 8001-8050 \
 --no-port-check \
+--full-rpc-api \
 --private-rpc \
 --rpc-bind-address 127.0.0.1 \
 --tower /root/solana/ledger \
@@ -346,9 +347,10 @@ cd /root/solana && git clone https://github.com/stakeconomy/solanamonitoring/ &&
 mkdir -p /root/tmp_git && cd $_ && git clone https://github.com/Vahhhh/solana/ && \
 cp -r /root/tmp_git/solana/monitoring /root/solana/ && chmod +x /root/solana/monitoring/output_starter.sh && cd /root/solana
 
-if [ "$CLIENT" == "jito" ]; then
-mv /root/solana/monitoring/solana_rpc_jito.py /root/solana/monitoring/solana_rpc.py
-fi
+# this error solved adding full-api key to jito
+#if [ "$CLIENT" == "jito" ]; then
+#mv /root/solana/monitoring/solana_rpc_jito.py /root/solana/monitoring/solana_rpc.py
+#fi
 
 printf 'from common import ValidatorConfig
 config = ValidatorConfig(
