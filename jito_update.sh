@@ -1,5 +1,5 @@
 #!/bin/bash
-# wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/jito_update.sh | bash
+# . <(wget -qO- https://raw.githubusercontent.com/Vahhhh/solana/main/jito_update.sh)
 set -e -x -v
 
 SOLANAVERSION=1.16.23
