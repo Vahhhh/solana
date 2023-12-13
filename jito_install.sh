@@ -31,7 +31,7 @@ ln -snf /root/.local/share/solana/install/releases/"$TAG" /root/.local/share/sol
 
 export VOTE_ACCOUNT_ADDRESS=$(solana address -k $VOTE_PATH)
 
-cp /root/solana/solana.service.json /root/solana/solana.service.old
+cp /root/solana/solana.service /root/solana/solana.service.old
 
 printf '[Unit]
 Description=Solana Mainnet node
