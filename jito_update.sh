@@ -11,7 +11,7 @@ SOLANAVERSION=$SOLANAVERSION_INPUT
 fi
 export TAG=v$SOLANAVERSION-jito
 
-cd ~/jito-solana && git pull ; git checkout tags/$TAG && git submodule update --init --recursive && \
+cd ~/jito-solana && git checkout master && git pull ; git checkout tags/$TAG && git submodule update --init --recursive && \
 CI_COMMIT=$(git rev-parse HEAD) scripts/cargo-install-all.sh --validator-only ~/.local/share/solana/install/releases/"$TAG"
 
 ln -nsf /root/.local/share/solana/install/releases/"$TAG" /root/.local/share/solana/install/active_release
