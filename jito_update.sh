@@ -2,7 +2,7 @@
 # . <(wget -qO- https://raw.githubusercontent.com/Vahhhh/solana/main/jito_update.sh)
 set -e -x -v
 
-SOLANAVERSION=1.16.23
+SOLANAVERSION="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=mainnet)"
 
 printf "${C_LGn}Enter the software version [$SOLANAVERSION]:${RES} "
 read -r SOLANAVERSION_INPUT
