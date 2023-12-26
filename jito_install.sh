@@ -1,6 +1,6 @@
 #!/bin/bash
 # . <(wget -qO- https://raw.githubusercontent.com/Vahhhh/solana/main/jito_install.sh)
-set -e -x -v
+#set -e -x -v
 
 SOLANAVERSION=1.16.23
 
@@ -48,34 +48,38 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --identity /root/solana/validator-keypair.json \
 --vote-account %s \
 --authorized-voter /root/solana/validator-keypair.json \
---rpc-port 8899 \
 --entrypoint 184.105.146.35:8000 \
 --entrypoint se1.laine.co.za:8001 \
 --entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint3.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint4.mainnet-beta.solana.com:8001 \
---log /root/solana/solana.log \
---ledger /root/solana/ledger \
---accounts /root/solana/accounts \
---dynamic-port-range 8001-8050 \
---no-port-check \
---private-rpc \
---rpc-bind-address 127.0.0.1 \
---tower /root/solana/ledger \
---snapshots /root/solana/snapshots \
---no-check-vote-account \
---expected-shred-version 56177 \
 --known-validator 7Np41oeYqPefeNQEHSv1UDhYrehxin3NStELsSKCT4K2 \
 --known-validator GdnSyH3YtwcxFvQrVVJMm1JhTS4QVX7MFsX56uJLUfiZ \
 --known-validator DE1bawNcRJB9rVm3buyMVfr8mBEoyyu73NBovf2oXJsJ \
 --known-validator CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S \
+--log /root/solana/solana.log \
+--ledger /root/solana/ledger \
+--accounts /root/solana/accounts \
+--tower /root/solana/ledger \
+--snapshots /root/solana/snapshots \
+--accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
+--dynamic-port-range 8001-8050 \
+--private-rpc \
+--rpc-bind-address 127.0.0.1 \
+--rpc-port 8899 \
+--full-rpc-api \
 --only-known-rpc \
+--maximum-full-snapshots-to-retain 2 \
+--maximum-incremental-snapshots-to-retain 3 \
+--accounts-hash-interval-slots 2500 \
+--full-snapshot-interval-slots 25000 \
+--incremental-snapshot-interval-slots 2500 \
+--maximum-local-snapshot-age 3000 \
+--minimal-snapshot-download-speed 30000000 \
 --limit-ledger-size \
 --wal-recovery-mode skip_any_corrupted_record \
---incremental-snapshots \
 --replay-slots-concurrently \
 --contact-debug-interval 1000000 \
---minimal-snapshot-download-speed 30000000 \
 --rocksdb-shred-compaction fifo \
 --tip-payment-program-pubkey T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt \
 --tip-distribution-program-pubkey 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7 \
@@ -92,5 +96,5 @@ WantedBy=multi-user.target
 
 systemctl daemon-reload
 
-cd ~/tmp_git/solana/ && git pull && cp -r /root/tmp_git/solana/monitoring /root/solana/ && \
-mv /root/solana/monitoring/solana_rpc_jito.py /root/solana/monitoring/solana_rpc.py
+#cd ~/tmp_git/solana/ && git pull && cp -r /root/tmp_git/solana/monitoring /root/solana/ && \
+#mv /root/solana/monitoring/solana_rpc_jito.py /root/solana/monitoring/solana_rpc.py
