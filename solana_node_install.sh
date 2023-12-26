@@ -19,14 +19,14 @@ SWAP_PATH="/swapfile"
 
 # Input variables
 
-printf "${C_LGn}Enter the Solana client (solana/jito) [S/j]:${RES} "
+printf "${C_LGn}Enter the Solana client (solana/JITO) [s/J]:${RES} "
 read -r CLIENT
 case "$CLIENT" in
-    [jJ]) 
-        CLIENT=jito
+    [sS]) 
+        CLIENT=solana
         ;;
     *)
-        CLIENT=solana
+        CLIENT=jito
         ;;
 esac
 
