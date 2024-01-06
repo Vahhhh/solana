@@ -16,6 +16,9 @@ VOTE_PATH="/root/solana/vote-account-keypair.json"
 VER_MAINNET="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=mainnet)"
 VER_TESTNET="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=testnet)"
 SWAP_PATH="/swapfile"
+ACCOUNTS_PATH="/root/solana/accounts"
+LEDGER_PATH="/root/solana/ledger"
+SNAPSHOTS_PATH="/root/solana/snapshots"
 
 # Input variables
 
@@ -56,6 +59,24 @@ printf "${C_LGn}Enter SWAP full path [$SWAP_PATH]:${RES} "
 read -r SWAP_INPUT
 if [ -n "$SWAP_INPUT" ]; then
 SWAP_PATH=$SWAP_INPUT
+fi
+
+printf "${C_LGn}Enter ACCOUNTS full path [$ACCOUNTS_PATH]:${RES} "
+read -r ACCOUNTS_INPUT
+if [ -n "$ACCOUNTS_INPUT" ]; then
+ACCOUNTS_PATH=$ACCOUNTS_INPUT
+fi
+
+printf "${C_LGn}Enter LEDGER full path [$LEDGER_PATH]:${RES} "
+read -r LEDGER_INPUT
+if [ -n "$LEDGER_INPUT" ]; then
+LEDGER_PATH=$LEDGER_INPUT
+fi
+
+printf "${C_LGn}Enter SNAPSHOTS full path [$SNAPSHOTS_PATH]:${RES} "
+read -r SNAPSHOTS_INPUT
+if [ -n "$SNAPSHOTS_INPUT" ]; then
+SNAPSHOTS_PATH=$SNAPSHOTS_INPUT
 fi
 
 mkdir -p $SOLANA_PATH
@@ -137,9 +158,12 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8FF8E1F7DF8B07E
 apt-get update -y && apt-get install gnupg curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
 curl -sL https://repos.influxdata.com/influxdata-archive_compat.key | apt-key add - && \
 echo "deb https://repos.influxdata.com/ubuntu bionic stable" >> /etc/apt/sources.list.d/influxdata.list && \
-apt-get update -y && apt-get upgrade -y && apt-get -y install git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
+apt-get update -y && apt-get upgrade -y && apt-get -y install cpufrequtils git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
 wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
+
+echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils
+systemctl disable ondemand
 
 if [ "$CLIENT" == "solana" ]; then
 cd /root/solana
@@ -180,6 +204,10 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --ledger /root/solana/ledger \
 --snapshots /root/solana/snapshots \
 --accounts /root/solana/accounts \
+--accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
+--accounts-hash-interval-slots 2500 \
+--full-snapshot-interval-slots 25000 \
+--incremental-snapshot-interval-slots 2500 \
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8020 \
 --log /root/solana/solana.log \
@@ -226,6 +254,10 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --ledger /root/solana/ledger \
 --snapshots /root/solana/snapshots \
 --accounts /root/solana/accounts \
+--accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
+--accounts-hash-interval-slots 2500 \
+--full-snapshot-interval-slots 25000 \
+--incremental-snapshot-interval-slots 2500 \
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8020 \
 --log /root/solana/solana.log \
@@ -290,10 +322,10 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --known-validator DE1bawNcRJB9rVm3buyMVfr8mBEoyyu73NBovf2oXJsJ \
 --known-validator CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S \
 --log /root/solana/solana.log \
---ledger /root/solana/ledger \
---accounts /root/solana/accounts \
---tower /root/solana/ledger \
---snapshots /root/solana/snapshots \
+--ledger '$LEDGER_PATH' \
+--accounts '$ACCOUNTS_PATH' \
+--tower '$LEDGER_PATH' \
+--snapshots '$SNAPHOTS_PATH' \
 --accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --dynamic-port-range 8001-8050 \
 --private-rpc \
@@ -341,7 +373,7 @@ systemctl daemon-reload
 systemctl restart logrotate.service
 
 systemctl enable solana.service
-systemctl start solana.service
+#systemctl start solana.service
 
 
 adduser telegraf sudo && \
