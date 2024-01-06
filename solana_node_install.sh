@@ -125,7 +125,13 @@ cat > /root/solana/solana.logrotate <<EOF
 }
 EOF
 
-#if [ ! -f $SWAP_PATH ]; then
+printf "${C_LGn}Should we create SWAP one more time? [Y/n]:${RES} "
+read -r SWAP_CREATE_INPUT
+case "$NETWORK" in
+    [nN]) 
+    echo "not creating swap one more time"
+        ;;
+    *)
     swapoff -a
     dd if=/dev/zero of=$SWAP_PATH bs=1G count=$SWAPSIZE
     chmod 600 $SWAP_PATH
@@ -137,6 +143,12 @@ EOF
 
     ## add to /etc/fstab
     echo $SWAP_PATH ' none swap sw 0 0' >> /etc/fstab
+        ;;
+esac
+
+
+#if [ ! -f $SWAP_PATH ]; then
+
 #fi
 
 if [ ! -d "/mnt/ramdisk" ]; then
