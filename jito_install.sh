@@ -11,6 +11,28 @@ SOLANAVERSION=$SOLANAVERSION_INPUT
 fi
 export TAG=v$SOLANAVERSION-jito
 
+ACCOUNTS_PATH="/root/solana/accounts"
+LEDGER_PATH="/root/solana/ledger"
+SNAPSHOTS_PATH="/root/solana/snapshots"
+
+printf "${C_LGn}Enter ACCOUNTS full path [$ACCOUNTS_PATH]:${RES} "
+read -r ACCOUNTS_INPUT
+if [ -n "$ACCOUNTS_INPUT" ]; then
+ACCOUNTS_PATH=$ACCOUNTS_INPUT
+fi
+
+printf "${C_LGn}Enter LEDGER full path [$LEDGER_PATH]:${RES} "
+read -r LEDGER_INPUT
+if [ -n "$LEDGER_INPUT" ]; then
+LEDGER_PATH=$LEDGER_INPUT
+fi
+
+printf "${C_LGn}Enter SNAPSHOTS full path [$SNAPSHOTS_PATH]:${RES} "
+read -r SNAPSHOTS_INPUT
+if [ -n "$SNAPSHOTS_INPUT" ]; then
+SNAPSHOTS_PATH=$SNAPSHOTS_INPUT
+fi
+
 export IDENTITY_PATH="/root/solana/validator-keypair.json"
 export VOTE_PATH="/root/solana/vote-account-keypair.json"
 
@@ -44,7 +66,6 @@ RestartSec=1
 LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
---no-skip-initial-accounts-db-clean \
 --identity /root/solana/identity.json \
 --vote-account %s \
 --authorized-voter /root/solana/validator-keypair.json \
