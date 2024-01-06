@@ -337,7 +337,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --ledger '$LEDGER_PATH' \
 --accounts '$ACCOUNTS_PATH' \
 --tower '$LEDGER_PATH' \
---snapshots '$SNAPHOTS_PATH' \
+--snapshots '$SNAPSHOTS_PATH' \
 --accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --dynamic-port-range 8001-8050 \
 --private-rpc \
