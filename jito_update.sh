@@ -1,6 +1,6 @@
 #!/bin/bash
 # . <(wget -qO- https://raw.githubusercontent.com/Vahhhh/solana/main/jito_update.sh)
-set -e -x -v
+№ set -e -x -v
 
 SOLANAVERSION="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=mainnet)"
 
