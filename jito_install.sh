@@ -45,7 +45,7 @@ LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
 --no-skip-initial-accounts-db-clean \
---identity /root/solana/validator-keypair.json \
+--identity /root/solana/identity.json \
 --vote-account %s \
 --authorized-voter /root/solana/validator-keypair.json \
 --entrypoint 184.105.146.35:8000 \
@@ -58,10 +58,10 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --known-validator DE1bawNcRJB9rVm3buyMVfr8mBEoyyu73NBovf2oXJsJ \
 --known-validator CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S \
 --log /root/solana/solana.log \
---ledger /root/solana/ledger \
---accounts /root/solana/accounts \
---tower /root/solana/ledger \
---snapshots /root/solana/snapshots \
+--ledger '$LEDGER_PATH' \
+--accounts '$ACCOUNTS_PATH' \
+--tower '$LEDGER_PATH' \
+--snapshots '$SNAPSHOTS_PATH' \
 --accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --dynamic-port-range 8001-8050 \
 --private-rpc \
