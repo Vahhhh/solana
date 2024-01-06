@@ -91,6 +91,8 @@ if [ -n "$SWAPSIZE2_INPUT" ]; then
 SWAPSIZE2=$SWAPSIZE2_INPUT
 fi
 
+ln -sf /root/solana/validator-keypair.json /root/solana/identity.json
+
 cat > /root/solana/solana.logrotate <<EOF
 /root/solana/solana.log {
   rotate 7
@@ -172,8 +174,9 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --known-validator DE1bawNcRJB9rVm3buyMVfr8mBEoyyu73NBovf2oXJsJ \
 --known-validator CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S \
 --wal-recovery-mode skip_any_corrupted_record \
---identity /root/solana/validator-keypair.json \
---vote-account /root/solana/vote-account-keypair.json \
+--identity /root/solana/identity.json \
+--vote-account /root/solana/vote-account.json \
+--authorized-voter /root/solana/validator-keypair.json \
 --ledger /root/solana/ledger \
 --snapshots /root/solana/snapshots \
 --accounts /root/solana/accounts \
@@ -217,8 +220,9 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --known-validator 9QxCLckBiJc783jnMvXZubK4wH86Eqqvashtrwvcsgkv \
 --expected-genesis-hash 4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY \
 --wal-recovery-mode skip_any_corrupted_record \
---identity /root/solana/validator-keypair.json \
---vote-account /root/solana/vote-account-keypair.json \
+--identity /root/solana/identity.json \
+--vote-account /root/solana/vote-account.json \
+--authorized-voter /root/solana/validator-keypair.json \
 --ledger /root/solana/ledger \
 --snapshots /root/solana/snapshots \
 --accounts /root/solana/accounts \
@@ -273,7 +277,7 @@ LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
 --no-skip-initial-accounts-db-clean \
---identity /root/solana/validator-keypair.json \
+--identity /root/solana/identity.json \
 --vote-account %s \
 --authorized-voter /root/solana/validator-keypair.json \
 --entrypoint 184.105.146.35:8000 \
