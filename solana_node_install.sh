@@ -127,7 +127,7 @@ EOF
 
 printf "${C_LGn}Should we create SWAP one more time? [Y/n]:${RES} "
 read -r SWAP_CREATE_INPUT
-case "$NETWORK" in
+case "$SWAP_CREATE_INPUT" in
     [nN]) 
     echo "not creating swap one more time"
         ;;
