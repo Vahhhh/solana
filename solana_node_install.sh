@@ -79,6 +79,9 @@ if [ -n "$SNAPSHOTS_INPUT" ]; then
 SNAPSHOTS_PATH=$SNAPSHOTS_INPUT
 fi
 
+printf "${C_LGn}Will you use this server as a backup [y/N]:${RES} "
+read -r BACKUP
+
 mkdir -p $SOLANA_PATH
 if [ ! -f "$IDENTITY_PATH" ]; then
 printf "${C_LR}Enter your identity private key, the output will not be shown [1,2,3,4,5,6,7,etc]:${RES} "
@@ -308,6 +311,16 @@ source ~/.profile
 
 solana config set --url https://api.$NETWORK.solana.com
 solana config set --keypair /root/solana/validator-keypair.json
+
+case "$BACKUP" in
+    [yY]) 
+        solana-keygen new -s --no-bip39-passphrase -o /root/solana/unstaked-identity.json
+        ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
+        ;;
+    *)
+        echo
+        ;;
+esac
 
 VOTE_ACCOUNT_ADDRESS=$(solana address -k $VOTE_PATH)
 
