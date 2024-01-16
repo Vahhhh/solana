@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
 
-bash -c "echo 'vm.swappiness = 10' >> /etc/sysctl.conf"
+grep 'vm.swappiness = 10' /etc/sysctl.conf || bash -c "echo 'vm.swappiness = 10' >> /etc/sysctl.conf"
 
 bash -c "cat >/etc/sysctl.d/21-solana-validator.conf <<EOF
 # Increase UDP buffer sizes
