@@ -2,7 +2,7 @@
 #set -x -e
 
 BIN_PATH="$HOME/.local/share/solana/install/active_release/bin"
-NODE_ID=(identity1 identity2)
+NODE_ID=(vote1 vote2) # use 1 or more vote accounts separated by space
 API_URL=https://api.mainnet-beta.solana.com
 
 
