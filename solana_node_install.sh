@@ -214,7 +214,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --known-validator CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S \
 --wal-recovery-mode skip_any_corrupted_record \
 --identity /root/solana/identity.json \
---vote-account /root/solana/vote-account.json \
+--vote-account /root/solana/vote-account-keypair.json \
 --authorized-voter /root/solana/validator-keypair.json \
 --ledger '$LEDGER_PATH' \
 --accounts '$ACCOUNTS_PATH' \
@@ -266,7 +266,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --expected-genesis-hash 4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY \
 --wal-recovery-mode skip_any_corrupted_record \
 --identity /root/solana/identity.json \
---vote-account /root/solana/vote-account.json \
+--vote-account /root/solana/vote-account-keypair.json \
 --authorized-voter /root/solana/validator-keypair.json \
 --ledger '$LEDGER_PATH' \
 --accounts '$ACCOUNTS_PATH' \
