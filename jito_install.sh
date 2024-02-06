@@ -66,11 +66,7 @@ RestartSec=1
 LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
---wait-for-supermajority 246464040 \
---no-snapshot-fetch \
---no-genesis-fetch \
---expected-bank-hash 2QEvYhBgeWPJbC84fMTTK9NgntqiUAWiBEBf21rtTmng \
---expected-shred-version 50093 \
+--no-skip-initial-accounts-db-clean \
 --identity /root/solana/identity.json \
 --vote-account /root/solana/vote-account-keypair.json \
 --authorized-voter /root/solana/validator-keypair.json \
