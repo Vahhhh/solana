@@ -11,9 +11,9 @@ SOLANAVERSION=$SOLANAVERSION_INPUT
 fi
 export TAG=v$SOLANAVERSION-jito
 
-ACCOUNTS_PATH="/root/solana/accounts"
-LEDGER_PATH="/root/solana/ledger"
-SNAPSHOTS_PATH="/root/solana/snapshots"
+ACCOUNTS_PATH=$(grep '\--accounts ' /root/solana/solana.service | awk '{ print $2 }')
+LEDGER_PATH=$(grep '\--ledger' /root/solana/solana.service | awk '{ print $2 }')
+SNAPSHOTS_PATH=$(grep '\--snapshots' /root/solana/solana.service | awk '{ print $2 }')
 
 printf "${C_LGn}Enter ACCOUNTS full path [$ACCOUNTS_PATH]:${RES} "
 read -r ACCOUNTS_INPUT
@@ -67,7 +67,7 @@ LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
 --identity /root/solana/identity.json \
---vote-account %s \
+--vote-account /root/solana/vote-account-keypair.json \
 --authorized-voter /root/solana/validator-keypair.json \
 --entrypoint 184.105.146.35:8000 \
 --entrypoint se1.laine.co.za:8001 \
