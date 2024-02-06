@@ -70,8 +70,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --identity /root/solana/identity.json \
 --vote-account /root/solana/vote-account-keypair.json \
 --authorized-voter /root/solana/validator-keypair.json \
---entrypoint 184.105.146.35:8000 \
---entrypoint se1.laine.co.za:8001 \
+--entrypoint entrypoint.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint3.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint4.mainnet-beta.solana.com:8001 \
@@ -114,7 +113,7 @@ ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
 WantedBy=multi-user.target
-' "$VOTE_ACCOUNT_ADDRESS" > /root/solana/solana.service
+' > /root/solana/solana.service
 
 systemctl daemon-reload
 
