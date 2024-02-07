@@ -221,7 +221,6 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --tower '$LEDGER_PATH' \
 --snapshots '$SNAPSHOTS_PATH' \
 --accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
---accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --accounts-hash-interval-slots 2500 \
 --full-snapshot-interval-slots 25000 \
 --incremental-snapshot-interval-slots 2500 \
