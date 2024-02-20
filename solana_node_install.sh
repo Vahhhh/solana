@@ -13,6 +13,7 @@ CLIENT=solana
 SOLANA_PATH="/root/solana"
 IDENTITY_PATH="/root/solana/validator-keypair.json"
 VOTE_PATH="/root/solana/vote-account-keypair.json"
+UNSTAKED_IDENTITY_PATH="/root/solana/unstaked-identity.json"
 VER_MAINNET="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=mainnet)"
 VER_TESTNET="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=testnet)"
 SWAP_PATH="/swapfile"
@@ -93,6 +94,10 @@ if [ ! -f "$VOTE_PATH" ]; then
 printf "${C_LR}Enter your vote private key, the output will not be shown [1,2,3,4,5,6,7,etc]:${RES} "
 read -r -s VOTE_DATA
 echo $VOTE_DATA > $VOTE_PATH
+fi
+
+if [ ! -f "$UNSTAKED_IDENTITY_PATH" ]; then
+solana-keygen new -s --no-bip39-passphrase -o $UNSTAKED_IDENTITY_PATH
 fi
 
 if [ "$NETWORK" == "mainnet-beta" ]; then
@@ -313,7 +318,7 @@ solana config set --keypair /root/solana/validator-keypair.json
 
 case "$BACKUP" in
     [yY]) 
-        solana-keygen new -s --no-bip39-passphrase -o /root/solana/unstaked-identity.json
+#        solana-keygen new -s --no-bip39-passphrase -o /root/solana/unstaked-identity.json
         ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
         ;;
     *)
@@ -334,8 +339,10 @@ Restart=always
 RestartSec=1
 LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
+ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
+#ExecStartPost=bash -c "/root/restart_solana.sh &"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
---no-skip-initial-accounts-db-clean \
+#--no-skip-initial-accounts-db-clean \
 --identity /root/solana/identity.json \
 --vote-account /root/solana/vote-account-keypair.json \
 --authorized-voter /root/solana/validator-keypair.json \
@@ -352,25 +359,22 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --accounts '$ACCOUNTS_PATH' \
 --tower '$LEDGER_PATH' \
 --snapshots '$SNAPSHOTS_PATH' \
---accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
+#--accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --dynamic-port-range 8001-8050 \
 --private-rpc \
 --rpc-bind-address 127.0.0.1 \
 --rpc-port 8899 \
 --full-rpc-api \
 --only-known-rpc \
---maximum-full-snapshots-to-retain 2 \
---maximum-incremental-snapshots-to-retain 3 \
+--maximum-full-snapshots-to-retain 1 \
+--maximum-incremental-snapshots-to-retain 2 \
 --accounts-hash-interval-slots 2500 \
---full-snapshot-interval-slots 25000 \
+--full-snapshot-interval-slots 50000 \
 --incremental-snapshot-interval-slots 2500 \
 --maximum-local-snapshot-age 3000 \
 --minimal-snapshot-download-speed 30000000 \
 --limit-ledger-size \
 --wal-recovery-mode skip_any_corrupted_record \
---replay-slots-concurrently \
---contact-debug-interval 1000000 \
---rocksdb-shred-compaction fifo \
 --tip-payment-program-pubkey T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt \
 --tip-distribution-program-pubkey 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7 \
 --merkle-root-upload-authority GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib \
