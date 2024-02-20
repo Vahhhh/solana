@@ -96,10 +96,6 @@ read -r -s VOTE_DATA
 echo $VOTE_DATA > $VOTE_PATH
 fi
 
-if [ ! -f "$UNSTAKED_IDENTITY_PATH" ]; then
-solana-keygen new -s --no-bip39-passphrase -o $UNSTAKED_IDENTITY_PATH
-fi
-
 if [ "$NETWORK" == "mainnet-beta" ]; then
 SWAPSIZE=300
 SWAPSIZE2=250
@@ -326,6 +322,10 @@ case "$BACKUP" in
         ;;
 esac
 
+if [ ! -f "$UNSTAKED_IDENTITY_PATH" ]; then
+solana-keygen new -s --no-bip39-passphrase -o $UNSTAKED_IDENTITY_PATH
+fi
+
 VOTE_ACCOUNT_ADDRESS=$(solana address -k $VOTE_PATH)
 
 if [ "$NETWORK" == "mainnet-beta" ]; then
@@ -368,6 +368,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --only-known-rpc \
 --maximum-full-snapshots-to-retain 1 \
 --maximum-incremental-snapshots-to-retain 2 \
+--use-snapshot-archives-at-startup when-newest \
 --accounts-hash-interval-slots 2500 \
 --full-snapshot-interval-slots 50000 \
 --incremental-snapshot-interval-slots 2500 \
