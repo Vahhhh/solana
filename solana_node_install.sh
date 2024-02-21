@@ -322,10 +322,6 @@ case "$BACKUP" in
         ;;
 esac
 
-if [ ! -f "$UNSTAKED_IDENTITY_PATH" ]; then
-solana-keygen new -s --no-bip39-passphrase -o $UNSTAKED_IDENTITY_PATH
-fi
-
 VOTE_ACCOUNT_ADDRESS=$(solana address -k $VOTE_PATH)
 
 if [ "$NETWORK" == "mainnet-beta" ]; then
@@ -397,6 +393,10 @@ fi
 
 if [ ! -f "/etc/logrotate.d/solana.logrotate" ]; then
     ln -s /root/solana/solana.logrotate /etc/logrotate.d/
+fi
+
+if [ ! -f "$UNSTAKED_IDENTITY_PATH" ]; then
+solana-keygen new -s --no-bip39-passphrase -o $UNSTAKED_IDENTITY_PATH
 fi
 
 systemctl daemon-reload
