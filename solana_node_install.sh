@@ -254,7 +254,7 @@ RestartSec=1
 LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
---no-skip-initial-accounts-db-clean \
+#--no-skip-initial-accounts-db-clean \
 --entrypoint entrypoint3.testnet.solana.com:8001 \
 --entrypoint entrypoint2.testnet.solana.com:8001 \
 --entrypoint entrypoint.testnet.solana.com:8001 \
@@ -274,7 +274,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --snapshots '$SNAPSHOTS_PATH' \
 --accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --accounts-hash-interval-slots 2500 \
---full-snapshot-interval-slots 25000 \
+--full-snapshot-interval-slots 50000 \
 --incremental-snapshot-interval-slots 2500 \
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8020 \
