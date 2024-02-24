@@ -202,7 +202,7 @@ RestartSec=1
 LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
---no-skip-initial-accounts-db-clean \
+#--no-skip-initial-accounts-db-clean \
 --entrypoint entrypoint.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint3.mainnet-beta.solana.com:8001 \
@@ -221,9 +221,9 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --accounts '$ACCOUNTS_PATH' \
 --tower '$LEDGER_PATH' \
 --snapshots '$SNAPSHOTS_PATH' \
---accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
+#--accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --accounts-hash-interval-slots 2500 \
---full-snapshot-interval-slots 25000 \
+--full-snapshot-interval-slots 50000 \
 --incremental-snapshot-interval-slots 2500 \
 --limit-ledger-size 50000000 \
 --dynamic-port-range 8000-8020 \
@@ -272,7 +272,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --accounts '$ACCOUNTS_PATH' \
 --tower '$LEDGER_PATH' \
 --snapshots '$SNAPSHOTS_PATH' \
---accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
+#--accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --accounts-hash-interval-slots 2500 \
 --full-snapshot-interval-slots 50000 \
 --incremental-snapshot-interval-slots 2500 \
