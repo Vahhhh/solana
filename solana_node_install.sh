@@ -116,6 +116,13 @@ if [ -n "$SWAPSIZE2_INPUT" ]; then
 SWAPSIZE2=$SWAPSIZE2_INPUT
 fi
 
+printf "${C_LGn}Enter the Telegram bot token[$SWAPSIZE2]:${RES} "
+read -r TELEGRAM_BOT_TOKEN
+
+printf "${C_LGn}Enter the Telegram chat id[$SWAPSIZE2]:${RES} "
+read -r TELEGRAM_CHAT_ID
+
+
 ln -sf /root/solana/validator-keypair.json /root/solana/identity.json
 
 cat > /root/solana/solana.logrotate <<EOF
@@ -398,6 +405,8 @@ fi
 if [ ! -f "$UNSTAKED_IDENTITY_PATH" ]; then
 solana-keygen new -s --no-bip39-passphrase -o $UNSTAKED_IDENTITY_PATH
 fi
+
+wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/post_restart_solana.sh | bash -s $NODENAME $TELEGRAM_BOT_TOKEN $TELEGRAM_CHAT_ID
 
 systemctl daemon-reload
 
