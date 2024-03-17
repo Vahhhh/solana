@@ -58,6 +58,3 @@ catchup_info() {
 send_message "${ICON} Solana alert! ${NODE_NAME}" "Solana service has been restarted! identity - $(ls -l /root/solana/identity.json | awk '{ print $NF }')"
 send_message "${ICON} Solana alert! ${NODE_NAME}" "$(catchup_info)"
 
-' > /root/solana/post_restart_solana.sh
-
-chmod +x /root/solana/post_restart_solana.sh
