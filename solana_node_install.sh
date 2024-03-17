@@ -343,7 +343,7 @@ RestartSec=1
 LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
-#ExecStartPost=bash -c "/root/restart_solana.sh &"
+ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
 #--no-skip-initial-accounts-db-clean \
 --identity /root/solana/identity.json \
@@ -362,6 +362,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --accounts '$ACCOUNTS_PATH' \
 --tower '$LEDGER_PATH' \
 --snapshots '$SNAPSHOTS_PATH' \
+--incremental-snapshot-archive-path '$SNAPSHOTS_PATH' \
 #--accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --dynamic-port-range 8001-8050 \
 --private-rpc \
@@ -406,7 +407,10 @@ if [ ! -f "$UNSTAKED_IDENTITY_PATH" ]; then
 solana-keygen new -s --no-bip39-passphrase -o $UNSTAKED_IDENTITY_PATH
 fi
 
-wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/post_restart_solana.sh | bash -s $NODENAME $TELEGRAM_BOT_TOKEN $TELEGRAM_CHAT_ID
+wget -O /root/solana/post_restart_solana.sh https://raw.githubusercontent.com/Vahhhh/solana/main/post_restart_solana.sh && chmod +x /root/solana/post_restart_solana.sh
+sed -i "s/NODE_NAME=\"\"/NODE_NAME=\"$NODENAME\"/g" /root/solana/post_restart_solana.sh
+sed -i "s/telegram_bot_token=\"\"/telegram_bot_token=\"$TELEGRAM_BOT_TOKEN\"/g" /root/solana/post_restart_solana.sh
+sed -i "s/telegram_chat_id=\"\"/telegram_chat_id=\"$TELEGRAM_CHAT_ID\"/g" /root/solana/post_restart_solana.sh
 
 systemctl daemon-reload
 
