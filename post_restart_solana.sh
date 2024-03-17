@@ -13,9 +13,9 @@ echo
 
 SLEEP_SEC=30
 service_file="/root/solana/solana.service"
-TELEGRAM_BOT_TOKEN=
-TELEGRAM_CHAT_ID=
-NODE_NAME='new-node'
+NODE_NAME=$1
+TELEGRAM_BOT_TOKEN=$2
+TELEGRAM_CHAT_ID=$3
 
 LEDGER=$(grep '\--ledger ' $service_file | awk '{ print $2 }')        # path to ledger (default: /root/solana/ledger)
 SNAPSHOTS=$(grep '\--snapshots ' $service_file | awk '{ print $2 }')  # path to snapshots (default: /root/solana/ledger)
