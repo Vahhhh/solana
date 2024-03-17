@@ -1,13 +1,18 @@
 #!/bin/bash
 # set -x -e
 
+# run by 
+# . <(wget -qO- https://raw.githubusercontent.com/Vahhhh/solana/main/post_restart_solana.sh)
+# or
+# wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/post_restart_solana.sh | bash -s $NODENAME $TELEGRAM_BOT_TOKEN $TELEGRAM_CHAT_ID
+
 echo "###################### WARNING!!! ###################################"
 echo "###   This script will perform the following operations:          ###"
 echo "###   * check your slot and rpc slot                              ###"
 echo "###   * restart validator service and send message                ###"
 echo "###   * wait for catchup send message                             ###"
 echo "###                                                               ###"
-echo "###   *** Script provided by MARGUS.ONE                           ###"
+echo "###   *** Script provided by MARGUS.ONE and Vah StakeITeasy       ###"
 echo "#####################################################################"
 echo
 
@@ -16,6 +21,21 @@ service_file="/root/solana/solana.service"
 NODE_NAME=$1
 TELEGRAM_BOT_TOKEN=$2
 TELEGRAM_CHAT_ID=$3
+
+if [[ -z "$NODE_NAME" ]]; then
+printf "${C_LGn}Enter the nodename [node-main]:${RES} "
+read -r NODENAME
+fi
+
+if [[ -z "$TELEGRAM_BOT_TOKEN" ]]; then
+printf "${C_LGn}Enter the Telegram bot token:${RES} "
+read -r TELEGRAM_BOT_TOKEN
+fi
+
+if [[ -z "$TELEGRAM_CHAT_ID" ]]; then
+printf "${C_LGn}Enter the Telegram chat id:${RES} "
+read -r TELEGRAM_CHAT_ID
+fi
 
 LEDGER=$(grep '\--ledger ' $service_file | awk '{ print $2 }')        # path to ledger (default: /root/solana/ledger)
 SNAPSHOTS=$(grep '\--snapshots ' $service_file | awk '{ print $2 }')  # path to snapshots (default: /root/solana/ledger)
