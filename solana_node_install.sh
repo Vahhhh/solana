@@ -116,10 +116,10 @@ if [ -n "$SWAPSIZE2_INPUT" ]; then
 SWAPSIZE2=$SWAPSIZE2_INPUT
 fi
 
-printf "${C_LGn}Enter the Telegram bot token[$SWAPSIZE2]:${RES} "
+printf "${C_LGn}Enter the Telegram bot token:${RES} "
 read -r TELEGRAM_BOT_TOKEN
 
-printf "${C_LGn}Enter the Telegram chat id[$SWAPSIZE2]:${RES} "
+printf "${C_LGn}Enter the Telegram chat id:${RES} "
 read -r TELEGRAM_CHAT_ID
 
 
