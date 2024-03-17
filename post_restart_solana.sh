@@ -1,32 +1,7 @@
 #!/bin/bash
 # set -x -e
 # run by 
-# . <(wget -qO- https://raw.githubusercontent.com/Vahhhh/solana/main/post_restart_solana.sh)
-# or
-# wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/post_restart_solana.sh | bash -s $NODENAME $TELEGRAM_BOT_TOKEN $TELEGRAM_CHAT_ID
-
-NODE_NAME=$1
-TELEGRAM_BOT_TOKEN=$2
-TELEGRAM_CHAT_ID=$3
-
-if [[ -z "$NODE_NAME" ]]; then
-printf "${C_LGn}Enter the nodename [node-main]:${RES} "
-read -r NODENAME
-fi
-
-if [[ -z "$TELEGRAM_BOT_TOKEN" ]]; then
-printf "${C_LGn}Enter the Telegram bot token:${RES} "
-read -r TELEGRAM_BOT_TOKEN
-fi
-
-if [[ -z "$TELEGRAM_CHAT_ID" ]]; then
-printf "${C_LGn}Enter the Telegram chat id:${RES} "
-read -r TELEGRAM_CHAT_ID
-fi
-
-printf '
-#!/bin/bash
-# set -x -e
+# wget -O /root/solana/post_restart_solana.sh https://raw.githubusercontent.com/Vahhhh/solana/main/post_restart_solana.sh && chmod +x /root/solana/post_restart_solana.sh
 echo "###################### WARNING!!! ###################################"
 echo "###   This script will perform the following operations:          ###"
 echo "###   * check your slot and rpc slot                              ###"
@@ -36,6 +11,8 @@ echo "###                                                               ###"
 echo "###   *** Script provided by MARGUS.ONE and Vah StakeITeasy       ###"
 echo "#####################################################################"
 echo
+
+NODE_NAME=""
 
 SLEEP_SEC=30
 service_file="/root/solana/solana.service"
@@ -47,8 +24,8 @@ ICON=`echo -e '\U0001F514'`
 PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 
 send_message() {
-telegram_bot_token=$TELEGRAM_BOT_TOKEN
-telegram_chat_id=$TELEGRAM_CHAT_ID
+telegram_bot_token=""
+telegram_chat_id=""
 Title="$1"
 Message="$2"
 curl -s \
