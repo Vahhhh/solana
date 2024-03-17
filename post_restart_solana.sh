@@ -4,9 +4,9 @@
 # wget -O /root/solana/post_restart_solana.sh https://raw.githubusercontent.com/Vahhhh/solana/main/post_restart_solana.sh && chmod +x /root/solana/post_restart_solana.sh
 echo "###################### WARNING!!! ###################################"
 echo "###   This script will perform the following operations:          ###"
-echo "###   * check your slot and rpc slot                              ###"
-echo "###   * restart validator service and send message                ###"
-echo "###   * wait for catchup send message                             ###"
+echo "###   * inform you about restart                                  ###"
+echo "###   * catchup this node                                         ###"
+echo "###   * change the identity to staked if node is delinq           ###"
 echo "###                                                               ###"
 echo "###   *** Script provided by MARGUS.ONE and Vah StakeITeasy       ###"
 echo "#####################################################################"
