@@ -23,11 +23,16 @@ SNAPSHOTS_PATH="/root/solana/snapshots"
 
 # Input variables
 
-printf "${C_LGn}Enter the Solana client (solana/JITO) [s/J]:${RES} "
+printf "${C_LGn}Enter the Solana client (solana/JITO/forge) [s/J/f]:${RES} "
 read -r CLIENT
 case "$CLIENT" in
     [sS]) 
         CLIENT=solana
+        ;;
+    [fF]) 
+        CLIENT=forge
+        printf "${C_LGn}Enter the node UUID:${RES} "
+        read -r UUID
         ;;
     *)
         CLIENT=jito
@@ -121,7 +126,6 @@ read -r TELEGRAM_BOT_TOKEN
 
 printf "${C_LGn}Enter the Telegram chat id:${RES} "
 read -r TELEGRAM_CHAT_ID
-
 
 ln -sf /root/solana/validator-keypair.json /root/solana/identity.json
 
@@ -393,6 +397,128 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 WantedBy=multi-user.target
 ' > /root/solana/solana.service
 fi
+
+elif [ "$CLIENT" == "forge" ]; then
+TAG=v$SOLANAVERSION-forge
+
+printf '#!/bin/bash
+
+FORGE_TAG='$TAG'
+FORGE_BRANCH='$TAG'
+
+# check ver
+FORGE_VER=$(~/.local/share/solana/install/releases/${FORGE_TAG}/bin/solana --version)
+echo $FORGE_VER
+
+if [ -z "$FORGE_VER" ]; then
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+source $HOME/.cargo/env
+
+rustup component add rustfmt
+rustup update
+
+sudo apt-get update -y
+sudo apt-get install libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang cmake make libprotobuf-dev protobuf-compiler -y
+
+# clone repo
+cd ~/ && rm -rf ~/solana-forge && mkdir ~/solana-forge
+cd ~/solana-forge/
+#git clone https://github.com/solana-forge/solana.git --branch ${FORGE_TAG} --single-branch
+git clone https://github.com/solana-forge/forge-solana.git solana
+cd ~/solana-forge/solana
+git reset --hard
+git pull origin ${FORGE_BRANCH}
+git switch -c ${FORGE_BRANCH}
+git fetch
+git checkout tags/${FORGE_TAG}
+git submodule update --init --recursive
+CI_COMMIT=$(git rev-parse HEAD) scripts/cargo-install-all.sh --validator-only ~/.local/share/solana/install/releases/"${FORGE_TAG}"
+ln -sfn ~/.local/share/solana/install/releases/"${FORGE_TAG}" ~/.local/share/solana/install/releases/forge
+~/.local/share/solana/install/releases/forge/bin/solana-validator --version
+
+else
+        echo "$FORGE_TAG already installed"
+fi
+' > /root/start.sh
+chmod +x /root/start.sh
+
+ln -snf /root/.local/share/solana/install/releases/"$TAG" /root/.local/share/solana/install/active_release
+export PATH="/root/.local/share/solana/install/releases/forge/bin:$PATH"
+echo 'export PATH="/root/.local/share/solana/install/releases/forge/bin:$PATH"' >> /root/.profile
+source ~/.profile
+
+solana config set --url https://api.$NETWORK.solana.com
+solana config set --keypair /root/solana/validator-keypair.json
+
+case "$BACKUP" in
+    [yY]) 
+#        solana-keygen new -s --no-bip39-passphrase -o /root/solana/unstaked-identity.json
+        ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
+        ;;
+    *)
+        echo
+        ;;
+esac
+
+if [ "$NETWORK" == "mainnet-beta" ]; then
+printf '[Unit]
+Description=Solana Mainnet node
+After=network.target syslog.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+LimitNOFILE=2048000
+Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
+ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
+ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
+#ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
+Environment="PATH=/bin:/usr/bin:/root/.local/share/solana/install/releases/forge/bin"
+ExecStart=/root/.local/share/solana/install/releases/forge/bin/solana-validator \
+#--no-skip-initial-accounts-db-clean \
+--identity /root/solana/identity.json \
+--vote-account /root/solana/vote-account-keypair.json \
+--authorized-voter /root/solana/validator-keypair.json \
+--entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
+--entrypoint entrypoint3.mainnet-beta.solana.com:8001 \
+--entrypoint entrypoint4.mainnet-beta.solana.com:8001 \
+--known-validator 7Np41oeYqPefeNQEHSv1UDhYrehxin3NStELsSKCT4K2 \
+--known-validator GdnSyH3YtwcxFvQrVVJMm1JhTS4QVX7MFsX56uJLUfiZ \
+--known-validator DE1bawNcRJB9rVm3buyMVfr8mBEoyyu73NBovf2oXJsJ \
+--known-validator CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S \
+--log /root/solana/solana.log \
+--ledger '$LEDGER_PATH' \
+--accounts '$ACCOUNTS_PATH' \
+--tower '$LEDGER_PATH' \
+--snapshots '$SNAPSHOTS_PATH' \
+--incremental-snapshot-archive-path '$SNAPSHOTS_PATH' \
+--dynamic-port-range 8001-8050 \
+--private-rpc \
+--rpc-bind-address 127.0.0.1 \
+--rpc-port 8899 \
+--full-rpc-api \
+--only-known-rpc \
+--maximum-full-snapshots-to-retain 1 \
+--maximum-incremental-snapshots-to-retain 2 \
+--use-snapshot-archives-at-startup when-newest \
+--accounts-hash-interval-slots 2500 \
+--full-snapshot-interval-slots 50000 \
+--incremental-snapshot-interval-slots 2500 \
+--maximum-local-snapshot-age 3000 \
+--minimal-snapshot-download-speed 30000000 \
+--limit-ledger-size \
+--wal-recovery-mode skip_any_corrupted_record \
+--pbs-uuid '$UUID' \
+--pbs-url http://45.77.220.225:6775
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+[Install]
+WantedBy=multi-user.target
+' > /root/solana/solana.service
+fi
+
 fi
 
 if [ ! -f "/etc/systemd/system/solana.service" ]; then
