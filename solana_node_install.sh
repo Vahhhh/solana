@@ -463,7 +463,7 @@ printf '# Input Plugins
     report_active = false
 [[inputs.disk]]
     ignore_fs = ["devtmpfs", "devfs"]
-[[inputs.io]]
+#[[inputs.io]]
 [[inputs.mem]]
 [[inputs.net]]
 [[inputs.system]]
