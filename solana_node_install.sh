@@ -442,6 +442,7 @@ else
 fi
 ' > /root/start.sh
 chmod +x /root/start.sh
+/root/start.sh
 
 ln -snf /root/.local/share/solana/install/releases/"$TAG" /root/.local/share/solana/install/active_release
 export PATH="/root/.local/share/solana/install/releases/forge/bin:$PATH"
