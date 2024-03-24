@@ -180,11 +180,14 @@ echo ""
 
 #: ${value2:=$default1}
 
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8FF8E1F7DF8B07E
+#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8FF8E1F7DF8B07E
+#curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
+#curl -sL https://repos.influxdata.com/influxdata-archive_compat.key | apt-key add - && \
+apt-get update -y && apt-get install wget gnupg curl -y && \
 
-apt-get update -y && apt-get install gnupg curl -y && curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
-curl -sL https://repos.influxdata.com/influxdata-archive_compat.key | apt-key add - && \
-echo "deb https://repos.influxdata.com/ubuntu jammy stable" >> /etc/apt/sources.list.d/influxdata.list && \
+wget -q -O - https://repos.influxdata.com/influxdb.key | sudo gpg --dearmor -o /etc/apt/keyrings/influxdb.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/influxdb.gpg] https://repos.influxdata.com/ubuntu jammy stable" >> /etc/apt/sources.list.d/influxdata.list && \
 apt-get update -y && apt-get upgrade -y && apt-get -y install cpufrequtils git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
 wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
