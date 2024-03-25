@@ -194,6 +194,7 @@ wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
 
 echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils
 systemctl disable ondemand
+cpupower frequency-set -g performance
 
 if [ "$CLIENT" == "solana" ]; then
 cd /root/solana
