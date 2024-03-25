@@ -188,7 +188,7 @@ apt-get update -y && apt-get install wget gnupg curl -y && \
 wget -q -O - https://repos.influxdata.com/influxdb.key | sudo gpg --dearmor -o /etc/apt/keyrings/influxdb.gpg
 
 echo "deb [signed-by=/etc/apt/keyrings/influxdb.gpg] https://repos.influxdata.com/ubuntu jammy stable" >> /etc/apt/sources.list.d/influxdata.list && \
-apt-get update -y && apt-get upgrade -y && apt-get -y install cpufrequtils git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
+apt-get update -y && apt-get upgrade -y && apt-get -y install linux-tools-common cpufrequtils git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
 wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
 
