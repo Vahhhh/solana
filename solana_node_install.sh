@@ -127,6 +127,8 @@ read -r TELEGRAM_BOT_TOKEN
 printf "${C_LGn}Enter the Telegram chat id:${RES} "
 read -r TELEGRAM_CHAT_ID
 
+timedatectl set-timezone Europe/Moscow && echo "LANG=C.UTF-8" > /etc/default/locale
+
 ln -sf /root/solana/validator-keypair.json /root/solana/identity.json
 
 cat > /root/solana/solana.logrotate <<EOF
