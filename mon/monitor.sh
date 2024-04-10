@@ -1,5 +1,8 @@
 #!/bin/bash
 #set -e -x
+
+. /root/.profile
+
 # input vars
 LOCK_FILE=/root/mon/catchup.lock
 KEY_NAME="validator-keypair.json"
@@ -8,15 +11,15 @@ SLEEP_SEC=30
 
 # calc vars
 SCRIPT_DIR=`cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P`
-APP_SOLANA="/root/.local/share/solana/install/releases/forge/bin/solana"
-APP_SOLANA_VALIDATOR="/root/.local/share/solana/install/releases/forge/bin/solana-validator"
+APP_SOLANA="/root/.local/share/solana/install/active_release/bin/solana"
+APP_SOLANA_VALIDATOR="/root/.local/share/solana/install/active_release/bin/solana-validator"
 KEYS_PATH="/root/solana/validator-keypair.json"
 ID_PUBKEY=`${APP_SOLANA} address -k ${KEYS_PATH}`
 
 SCRIPT_DIR=`cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P`
 
 # backup node IP-address or hostname
-node2=69.10.34.154
+node2=XXX.XXX.XXX.XXX
 
 #telegram info from other scripts
 
@@ -71,6 +74,12 @@ fi
 INSYNC_FULL=`timeout ${TIMEOUT} ${APP_SOLANA} catchup --our-localhost`
 INSYNC=`echo $INSYNC_FULL | grep caught`
 ID_INSYNC=`echo $INSYNC_FULL | awk '{print $1}'`
+if [[ -z ${INSYNC_FULL} ]]
+then
+INSYNC_FULL=`timeout ${TIMEOUT} ${APP_SOLANA} catchup --our-localhost`
+INSYNC=`echo $INSYNC_FULL | grep caught`
+ID_INSYNC=`echo $INSYNC_FULL | awk '{print $1}'`
+fi
 
 if [[ $PING_1 == 0 ]] && [[ $PING_2 == 0 ]]
 then
@@ -97,7 +106,7 @@ fi
 
 if [[ -z ${INSYNC_FULL} ]]
 then
-        echo "`date` ALARM! node is out of sync"
+        echo "`date` ALARM! node is out of sync"; echo $INSYNC_FULL
         touch $LOCK_FILE
         send_message "${ICON} Solana alert! $HOSTNAME - ${NODE_NAME} - $0" "ALARM! node is out of sync, trying to sync"
         send_message "${ICON} Solana alert! $HOSTNAME - ${NODE_NAME} - $0" "$(catchup_info)"
