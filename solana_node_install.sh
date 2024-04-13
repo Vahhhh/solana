@@ -218,6 +218,8 @@ Restart=always
 RestartSec=1
 LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
+ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
+ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
 #--no-skip-initial-accounts-db-clean \
 --entrypoint entrypoint.mainnet-beta.solana.com:8001 \
@@ -270,6 +272,8 @@ Restart=always
 RestartSec=1
 LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
+ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
+ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
 ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
 #--no-skip-initial-accounts-db-clean \
 --entrypoint entrypoint3.testnet.solana.com:8001 \
