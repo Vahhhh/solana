@@ -17,9 +17,9 @@ UNSTAKED_IDENTITY_PATH="/root/solana/unstaked-identity.json"
 VER_MAINNET="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=mainnet)"
 VER_TESTNET="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=testnet)"
 SWAP_PATH="/swapfile"
-ACCOUNTS_PATH="/root/solana/accounts"
-LEDGER_PATH="/root/solana/ledger"
-SNAPSHOTS_PATH="/root/solana/snapshots"
+ACCOUNTS_PATH="/mnt/accounts"
+LEDGER_PATH="/mnt/ledger"
+SNAPSHOTS_PATH="/mnt/snapshots"
 
 # Input variables
 
@@ -182,14 +182,11 @@ echo ""
 
 #: ${value2:=$default1}
 
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8FF8E1F7DF8B07E
-#curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
-#curl -sL https://repos.influxdata.com/influxdata-archive_compat.key | apt-key add - && \
-apt-get update -y && apt-get install wget gnupg curl -y && \
+apt-get update -y && apt-get install wget gnupg curl gpg -y && \
+gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D8FF8E1F7DF8B07E && \
+gpg --export D8FF8E1F7DF8B07E | sudo tee /etc/apt/trusted.gpg.d/influxdb.gpg > /dev/null && \
+echo "deb [signed-by=/etc/apt/trusted.gpg.d/influxdb.gpg] https://repos.influxdata.com/ubuntu jammy stable" >> /etc/apt/sources.list.d/influxdata.list
 
-wget -q -O - https://repos.influxdata.com/influxdb.key | sudo gpg --dearmor -o /etc/apt/keyrings/influxdb.gpg
-
-echo "deb [signed-by=/etc/apt/keyrings/influxdb.gpg] https://repos.influxdata.com/ubuntu jammy stable" >> /etc/apt/sources.list.d/influxdata.list && \
 apt-get update -y && apt-get upgrade -y && apt-get -y install linux-tools-common cpufrequtils git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
 wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
