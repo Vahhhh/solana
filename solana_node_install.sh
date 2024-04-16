@@ -182,7 +182,7 @@ echo ""
 
 #: ${value2:=$default1}
 
-#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8FF8E1F7DF8B07E
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8FF8E1F7DF8B07E
 #curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
 #curl -sL https://repos.influxdata.com/influxdata-archive_compat.key | apt-key add - && \
 apt-get update -y && apt-get install wget gnupg curl -y && \
