@@ -71,15 +71,18 @@ if [[ $PING_NODE2 == 0 ]]; then sleep 10
 PING_NODE2=$(ping -c 4 $node2 | grep transmitted | awk '{print $4}')
 fi
 
+for ((i=1; i < 4; i++))
+do
 INSYNC_FULL=`timeout ${TIMEOUT} ${APP_SOLANA} catchup --our-localhost`
-INSYNC=`echo $INSYNC_FULL | grep caught`
-ID_INSYNC=`echo $INSYNC_FULL | awk '{print $1}'`
+echo $i $INSYNC_FULL
 if [[ -z ${INSYNC_FULL} ]]
-then
-INSYNC_FULL=`timeout ${TIMEOUT} ${APP_SOLANA} catchup --our-localhost`
+then sleep 5
+else break
+fi
+done
+
 INSYNC=`echo $INSYNC_FULL | grep caught`
 ID_INSYNC=`echo $INSYNC_FULL | awk '{print $1}'`
-fi
 
 if [[ $PING_1 == 0 ]] && [[ $PING_2 == 0 ]]
 then
@@ -114,8 +117,16 @@ then
         exit 12
 fi
 
+for ((i=1; i < 4; i++))
+do
 IS_DELINQUENT=`timeout ${TIMEOUT} ${APP_SOLANA} validators --output json | jq -r ".validators[] | select(.identityPubkey==\"${ID_PUBKEY}\") | .delinquent"`
-#echo $IS_DELINQUENT
+echo $i $IS_DELINQUENT
+if [[ -z ${IS_DELINQUENT} ]]
+then sleep 5
+else break
+fi
+done
+echo $IS_DELINQUENT
 
 if [[ ${IS_DELINQUENT} == "true" ]]|| [[ -z ${IS_DELINQUENT} ]]
 then
