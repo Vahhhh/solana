@@ -387,6 +387,7 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 WantedBy=multi-user.target
 ' > /root/solana/solana.service
 fi
+fi
 
 if [ ! -f "/etc/systemd/system/solana.service" ]; then
     ln -s /root/solana/solana.service /etc/systemd/system
