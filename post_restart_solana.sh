@@ -55,6 +55,9 @@ catchup_info() {
   done
 }
 
-send_message "${ICON} Solana alert! ${NODE_NAME}" "Solana service has been restarted! identity - $(ls -l /root/solana/identity.json | awk '{ print $NF }')"
-send_message "${ICON} Solana alert! ${NODE_NAME}" "$(catchup_info)"
+sed -i '/monitor.sh/s/^#*/#/g' -i_backup /etc/crontab  # (to comment out)
 
+send_message "${ICON} Solana alert! $HOSTNAME - ${NODE_NAME} - $0" "Solana service has been restarted! identity - $(solana address -k /root/solana/identity.json)"
+send_message "${ICON} Solana alert! $HOSTNAME - ${NODE_NAME} - $0" "$(catchup_info)"
+
+sed -i '/monitor.sh/s/^#*//g' -i_backup /etc/crontab  # (to uncomment)
