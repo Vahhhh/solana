@@ -20,6 +20,14 @@ service_file="/root/solana/solana.service"
 LEDGER=$(grep '\--ledger ' $service_file | awk '{ print $2 }')        # path to ledger (default: /root/solana/ledger)
 SNAPSHOTS=$(grep '\--snapshots ' $service_file | awk '{ print $2 }')  # path to snapshots (default: /root/solana/ledger)
 
+networkrpcURL=$(cat /root/.config/solana/cli/config.yml | grep json_rpc_url | grep -o '".*"' | tr -d '"')
+if [ "$networkrpcURL" == "" ]; then networkrpcURL=$(cat /root/.config/solana/cli/config.yml | grep json_rpc_url | awk '{ print $2 }')
+fi
+if [ "$networkrpcURL" == "https://api.testnet.solana.com" ]; then network=t
+fi
+if [ "$networkrpcURL" == "https://api.mainnet-beta.solana.com" ]; then network=m
+fi
+
 ICON=`echo -e '\U0001F514'`
 PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 
@@ -41,7 +49,7 @@ catchup_info() {
     solana catchup --our-localhost $rpcPort ; status=$?
     if [ $status -eq 0 ]
     then
-      DELINQ=$(solana validators -um --output json-compact | jq -c --arg pub_key1 "$(solana address)" '.validators[] | select(.identityPubkey==$pub_key1 ) | .delinquent ')
+      DELINQ=$(solana validators -u$network --output json-compact | jq -c --arg pub_key1 "$(solana address)" '.validators[] | select(.identityPubkey==$pub_key1 ) | .delinquent ')
         if [[ $DELINQ == false ]]
         then
           echo "Node is running on another server, don't touch identity"
