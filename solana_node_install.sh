@@ -177,7 +177,7 @@ fi
 
 echo ""
 
-apt-get update -y && apt-get install wget gnupg curl gpg -y && \
+apt-get update -y && apt-get install wget gnupg curl gpg chrony -y && \
 gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D8FF8E1F7DF8B07E && \
 gpg --export D8FF8E1F7DF8B07E | sudo tee /etc/apt/trusted.gpg.d/influxdb.gpg > /dev/null && \
 echo "deb [signed-by=/etc/apt/trusted.gpg.d/influxdb.gpg] https://repos.influxdata.com/ubuntu jammy stable" > /etc/apt/sources.list.d/influxdata.list
