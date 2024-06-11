@@ -116,11 +116,13 @@ if [ -n "$SWAPSIZE2_INPUT" ]; then
 SWAPSIZE2=$SWAPSIZE2_INPUT
 fi
 
+if [[ $(grep -c telegram_bot_token /root/.profile) == 0 ]]; then
 printf "${C_LGn}Enter the Telegram bot token:${RES} "
 read -r TELEGRAM_BOT_TOKEN
 
 printf "${C_LGn}Enter the Telegram chat id:${RES} "
 read -r TELEGRAM_CHAT_ID
+fi
 
 timedatectl set-timezone Europe/Moscow && echo "LANG=C.UTF-8" > /etc/default/locale
 sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf
