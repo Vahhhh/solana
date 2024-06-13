@@ -411,8 +411,10 @@ wget -O /root/solana/post_restart_solana.sh https://raw.githubusercontent.com/Va
 sed -i "s/NODE_NAME=\"\"/NODE_NAME=\"$NODENAME\"/g" /root/solana/post_restart_solana.sh
 sed -i "s/telegram_bot_token=\"\"/telegram_bot_token=\"$TELEGRAM_BOT_TOKEN\"/g" /root/solana/post_restart_solana.sh
 sed -i "s/telegram_chat_id=\"\"/telegram_chat_id=\"$TELEGRAM_CHAT_ID\"/g" /root/solana/post_restart_solana.sh
+if [[ $(grep -c telegram_bot_token /root/.profile) == 0 ]]; then
 echo "telegram_bot_token=\"$TELEGRAM_BOT_TOKEN\"" >> /root/.profile
 echo "telegram_chat_id=\"$TELEGRAM_CHAT_ID\"" >> /root/.profile
+fi
 
 systemctl daemon-reload
 
