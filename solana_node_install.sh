@@ -165,7 +165,6 @@ esac
 
 
 #if [ ! -f $SWAP_PATH ]; then
-
 #fi
 
 if [ ! -d "/mnt/ramdisk" ]; then
