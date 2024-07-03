@@ -90,6 +90,8 @@ read -r -s IDENTITY_DATA
 echo $IDENTITY_DATA > $IDENTITY_PATH
 fi
 
+echo
+
 if [ ! -f "$VOTE_PATH" ]; then
 printf "${C_LR}Enter your vote private key, the output will not be shown [1,2,3,4,5,6,7,etc]:${RES} "
 read -r -s VOTE_DATA
@@ -382,9 +384,12 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --tip-distribution-program-pubkey 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7 \
 --merkle-root-upload-authority GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib \
 --commission-bps 800 \
---relayer-url http://frankfurt.mainnet.relayer.jito.wtf:8100 \
---block-engine-url https://frankfurt.mainnet.block-engine.jito.wtf \
---shred-receiver-address 145.40.93.84:1002
+--account-index program-id \
+--account-index-include-key AddressLookupTab1e1111111111111111111111111 \
+#--relayer-url http://127.0.0.1:11226 \
+--relayer-url http://ny.mainnet.relayer.jito.wtf:8100 \
+--block-engine-url https://ny.mainnet.block-engine.jito.wtf \
+--shred-receiver-address 141.98.216.96:1002
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
