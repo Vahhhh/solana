@@ -186,7 +186,7 @@ gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D8FF8E1F7DF8B07E && \
 gpg --export D8FF8E1F7DF8B07E | sudo tee /etc/apt/trusted.gpg.d/influxdb.gpg > /dev/null && \
 echo "deb [signed-by=/etc/apt/trusted.gpg.d/influxdb.gpg] https://repos.influxdata.com/ubuntu jammy stable" > /etc/apt/sources.list.d/influxdata.list
 
-apt-get update -y && apt-get upgrade -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" && apt-get -y install linux-tools-common cpufrequtils git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
+apt-get update -y && apt-get upgrade -y && apt-get -y install linux-tools-common linux-tools-generic cpufrequtils git telegraf jq bc screen python3-pip && systemctl stop telegraf && pip3 install numpy requests
 
 wget -O - https://raw.githubusercontent.com/Vahhhh/solana/main/limits.sh | bash
 
