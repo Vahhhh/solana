@@ -129,7 +129,8 @@ fi
 timedatectl set-timezone Europe/Moscow && echo "LANG=C.UTF-8" > /etc/default/locale
 sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf
 echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
-sed -i 's/week/dai/g' /etc/systemd/system/timers.target.wants/fstrim.timer && systemctl daemon-reload && systemctl restart fstrim.timer && systemctl restart fstrim.service
+sed -i 's/week/dai/g' /lib/systemd/system/fstrim.timer && sed -i 's/week/dai/g' /etc/systemd/system/timers.target.wants/fstrim.timer
+systemctl daemon-reload && systemctl restart fstrim.timer && systemctl restart fstrim.service
 
 ln -sf /root/solana/validator-keypair.json /root/solana/identity.json
 
