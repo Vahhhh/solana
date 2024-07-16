@@ -8,6 +8,9 @@
 
 # Default variables
 
+# to think about memory autodetect
+#if (( $(free | grep Mem: | awk '{ print $2 }') > 500000000 | bc -l ));then echo 1; else echo 0; fi
+
 NETWORK=testnet
 CLIENT=solana
 SOLANA_PATH="/root/solana"
