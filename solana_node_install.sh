@@ -17,7 +17,9 @@ UNSTAKED_IDENTITY_PATH="/root/solana/unstaked-identity.json"
 VER_MAINNET="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=mainnet)"
 VER_TESTNET="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=testnet)"
 SWAP_PATH="/swapfile"
-ACCOUNTS_PATH="/mnt/accounts"
+ACCOUNTS_PATH="/mnt/ramdisk/accounts"
+ACCOUNTS_INDEX_PATH="/mnt/ramdisk/accounts_index"
+ACCOUNTS_HASH_CACHE_PATH="/mnt/ramdisk/accounts_hash_cache"
 LEDGER_PATH="/mnt/ledger"
 SNAPSHOTS_PATH="/mnt/snapshots"
 
@@ -69,6 +71,18 @@ printf "${C_LGn}Enter ACCOUNTS full path [$ACCOUNTS_PATH]:${RES} "
 read -r ACCOUNTS_INPUT
 if [ -n "$ACCOUNTS_INPUT" ]; then
 ACCOUNTS_PATH=$ACCOUNTS_INPUT
+fi
+
+printf "${C_LGn}Enter ACCOUNTS_INDEX_PATH full path [$ACCOUNTS_INDEX_PATH]:${RES} "
+read -r ACCOUNTS_INDEX_INPUT
+if [ -n "$ACCOUNTS_INDEX_INPUT" ]; then
+ACCOUNTS_INDEX_PATH=$ACCOUNTS_INDEX_INPUT
+fi
+
+printf "${C_LGn}Enter ACCOUNTS_HASH_CACHE_PATH full path [$ACCOUNTS_HASH_CACHE_PATH]:${RES} "
+read -r ACCOUNTS_HASH_CACHE_INPUT
+if [ -n "$ACCOUNTS_HASH_CACHE_INPUT" ]; then
+ACCOUNTS_HASH_CACHE_PATH=$ACCOUNTS_HASH_CACHE_INPUT
 fi
 
 printf "${C_LGn}Enter LEDGER full path [$LEDGER_PATH]:${RES} "
@@ -361,10 +375,11 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator 
 --log /root/solana/solana.log \
 --ledger '$LEDGER_PATH' \
 --accounts '$ACCOUNTS_PATH' \
+--accounts-hash-cache-path '$ACCOUNTS_HASH_CACHE_PATH' \
+--accounts-index-path '$ACCOUNTS_INDEX_PATH' \
 --tower '$LEDGER_PATH' \
 --snapshots '$SNAPSHOTS_PATH' \
 --incremental-snapshot-archive-path '$SNAPSHOTS_PATH' \
---accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
 --dynamic-port-range 8001-8050 \
 --private-rpc \
 --rpc-bind-address 127.0.0.1 \
