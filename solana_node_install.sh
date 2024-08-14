@@ -212,9 +212,6 @@ echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils
 systemctl disable ondemand
 cpupower frequency-set -g performance
 
-solana config set --url https://api.$NETWORK.solana.com
-solana config set --keypair /root/solana/validator-keypair.json
-
 if [ "$CLIENT" == "solana" ]; then
 cd /root/solana
 
@@ -330,6 +327,9 @@ sh -c "$(curl -sSfL https://release.anza.xyz/v$SOLANAVERSION/install)" && \
 export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 
 fi
+
+solana config set --url https://api.$NETWORK.solana.com
+solana config set --keypair /root/solana/validator-keypair.json
 
 elif [ "$CLIENT" == "jito" ]; then
 
