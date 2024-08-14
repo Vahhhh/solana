@@ -326,7 +326,7 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 WantedBy=multi-user.target
 ' > /root/solana/solana.service
 
-sh -c "$(curl -sSfL https://release.anza.com/v$SOLANAVERSION/install)" && \
+sh -c "$(curl -sSfL https://release.anza.xyz/v$SOLANAVERSION/install)" && \
 export PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 
 fi
