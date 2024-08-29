@@ -135,14 +135,18 @@ if [ -n "$SWAPSIZE2_INPUT" ]; then
 SWAPSIZE2=$SWAPSIZE2_INPUT
 fi
 
-if [ -z "${TELEGRAM_BOT_TOKEN}" ]; then
+if [ -z "${telegram_bot_token}" ]; then
 printf "${C_LGn}Enter the Telegram bot token:${RES} "
 read -r TELEGRAM_BOT_TOKEN
+else
+TELEGRAM_BOT_TOKEN=$telegram_bot_token
 fi
 
-if [ -z "${TELEGRAM_CHAT_ID}" ]; then
+if [ -z "${telegram_chat_id}" ]; then
 printf "${C_LGn}Enter the Telegram chat id:${RES} "
 read -r TELEGRAM_CHAT_ID
+else
+TELEGRAM_CHAT_ID=$telegram_chat_id
 fi
 
 timedatectl set-timezone Europe/Moscow && echo "LANG=C.UTF-8" > /etc/default/locale
