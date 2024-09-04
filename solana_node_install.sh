@@ -449,6 +449,9 @@ if [[ $(grep -c telegram_bot_token /root/.profile) == 0 ]]; then
 echo "telegram_bot_token=\"$TELEGRAM_BOT_TOKEN\"" >> /root/.profile
 echo "telegram_chat_id=\"$TELEGRAM_CHAT_ID\"" >> /root/.profile
 fi
+if [ "$NETWORK" == "testnet" ]; then
+sed -i 's/solana-validator/agave-validator/g' /root/solana/post_restart_solana.sh
+fi
 
 systemctl daemon-reload
 
