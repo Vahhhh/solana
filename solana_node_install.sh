@@ -28,7 +28,7 @@ SNAPSHOTS_PATH="/mnt/snapshots"
 
 # Input variables
 
-printf "${C_LGn}Enter the Solana client (solana/JITO/Ari) [s/J/a]:${RES} "
+printf "${C_LGn}Enter the Solana client (solana/JITO) [s/J]:${RES} "
 read -r CLIENT
 case "$CLIENT" in
     [sS]) 
@@ -234,7 +234,7 @@ LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
 ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
-ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
+ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 #--no-skip-initial-accounts-db-clean \
 --entrypoint entrypoint.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
@@ -373,7 +373,7 @@ LimitNOFILE=2048000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
 ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
-ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
+ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 #--no-skip-initial-accounts-db-clean \
 --identity /root/solana/identity.json \
 --vote-account /root/solana/vote-account-keypair.json \
@@ -450,7 +450,7 @@ echo "telegram_bot_token=\"$TELEGRAM_BOT_TOKEN\"" >> /root/.profile
 echo "telegram_chat_id=\"$TELEGRAM_CHAT_ID\"" >> /root/.profile
 fi
 if [ "$NETWORK" == "testnet" ]; then
-sed -i 's/solana-validator/agave-validator/g' /root/solana/post_restart_solana.sh
+sed -i 's/agave-validator/agave-validator/g' /root/solana/post_restart_solana.sh
 fi
 
 systemctl daemon-reload
