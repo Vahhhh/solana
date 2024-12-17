@@ -236,6 +236,7 @@ ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/id
 ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
 ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 #--no-skip-initial-accounts-db-clean \
+--block-verification-method unified-scheduler \
 --entrypoint entrypoint.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint3.mainnet-beta.solana.com:8001 \
@@ -255,7 +256,6 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 --tower '$LEDGER_PATH' \
 --snapshots '$SNAPSHOTS_PATH' \
 --accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
---accounts-hash-interval-slots 2500 \
 --full-snapshot-interval-slots 50000 \
 --incremental-snapshot-interval-slots 2500 \
 --limit-ledger-size 50000000 \
@@ -294,6 +294,7 @@ ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/id
 ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
 ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 #--no-skip-initial-accounts-db-clean \
+--block-verification-method unified-scheduler \
 --entrypoint entrypoint3.testnet.solana.com:8001 \
 --entrypoint entrypoint2.testnet.solana.com:8001 \
 --entrypoint entrypoint.testnet.solana.com:8001 \
@@ -303,7 +304,6 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 --known-validator eoKpUABi59aT4rR9HGS3LcMecfut9x7zJyodWWP43YQ \
 --known-validator 9QxCLckBiJc783jnMvXZubK4wH86Eqqvashtrwvcsgkv \
 --expected-genesis-hash 4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY \
---wal-recovery-mode skip_any_corrupted_record \
 --identity /root/solana/identity.json \
 --vote-account /root/solana/vote-account-keypair.json \
 --authorized-voter /root/solana/validator-keypair.json \
@@ -312,7 +312,6 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 --tower '$LEDGER_PATH' \
 --snapshots '$SNAPSHOTS_PATH' \
 #--accounts-hash-cache-path /mnt/ramdisk/accounts_hash_cache \
---accounts-hash-interval-slots 2500 \
 --full-snapshot-interval-slots 50000 \
 --incremental-snapshot-interval-slots 2500 \
 --limit-ledger-size 50000000 \
@@ -375,6 +374,7 @@ ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/id
 ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
 ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 #--no-skip-initial-accounts-db-clean \
+--block-verification-method unified-scheduler \
 --identity /root/solana/identity.json \
 --vote-account /root/solana/vote-account-keypair.json \
 --authorized-voter /root/solana/validator-keypair.json \
@@ -402,19 +402,16 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 --full-rpc-api \
 --only-known-rpc \
 --maximum-full-snapshots-to-retain 1 \
---maximum-incremental-snapshots-to-retain 2 \
+--maximum-incremental-snapshots-to-retain 1 \
 --use-snapshot-archives-at-startup when-newest \
---accounts-hash-interval-slots 2500 \
 --full-snapshot-interval-slots 50000 \
 --incremental-snapshot-interval-slots 2500 \
---maximum-local-snapshot-age 3000 \
 --minimal-snapshot-download-speed 30000000 \
 --limit-ledger-size \
---wal-recovery-mode skip_any_corrupted_record \
 --tip-payment-program-pubkey T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt \
 --tip-distribution-program-pubkey 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7 \
 --merkle-root-upload-authority GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib \
---commission-bps 800 \
+--commission-bps 900 \
 --account-index program-id \
 --account-index-include-key AddressLookupTab1e1111111111111111111111111 \
 #--relayer-url http://127.0.0.1:11226 \
