@@ -45,7 +45,7 @@ curl -s \
 
 catchup_info() {
   while true; do
-    rpcPort=$(ps aux | grep solana-validator | grep -Po "\-\-rpc\-port\s+\K[0-9]+")
+    rpcPort=$(ps aux | grep agave-validator | grep -Po "\-\-rpc\-port\s+\K[0-9]+")
     solana catchup --our-localhost $rpcPort ; status=$?
     if [ $status -eq 0 ]
     then
@@ -54,7 +54,7 @@ catchup_info() {
         then
           echo "Node is running on another server, don't touch identity"
         else
-          solana-validator -l $LEDGER set-identity /root/solana/validator-keypair.json
+          agave-validator -l $LEDGER set-identity /root/solana/validator-keypair.json
         fi
       break
     fi
