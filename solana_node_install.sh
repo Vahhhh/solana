@@ -415,9 +415,9 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 --account-index program-id \
 --account-index-include-key AddressLookupTab1e1111111111111111111111111 \
 #--relayer-url http://127.0.0.1:11226 \
---relayer-url http://ny.mainnet.relayer.jito.wtf:8100 \
---block-engine-url https://ny.mainnet.block-engine.jito.wtf \
---shred-receiver-address 141.98.216.96:1002
+--relayer-url http://amsterdam.mainnet.relayer.jito.wtf:8100 \
+--block-engine-url https://amsterdam.mainnet.block-engine.jito.wtf \
+--shred-receiver-address 74.118.140.240:1002
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 [Install]
