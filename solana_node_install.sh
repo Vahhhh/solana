@@ -407,7 +407,7 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 --full-snapshot-interval-slots 50000 \
 --incremental-snapshot-interval-slots 2500 \
 --minimal-snapshot-download-speed 30000000 \
---limit-ledger-size \
+--limit-ledger-size 50000000 \
 --tip-payment-program-pubkey T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt \
 --tip-distribution-program-pubkey 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7 \
 --merkle-root-upload-authority GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib \
