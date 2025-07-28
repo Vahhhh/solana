@@ -19,9 +19,9 @@ export PATH="$HOME/firedancer/build/native/gcc/bin/:$PATH"
 echo 'export PATH='$PATH >> ~/.bashrc
 source ~/.bashrc
 mkdir -p /mnt/accounts /mnt/ledger /mnt/snapshots /var/log/dancer /root/solana
-#ln -sf /mnt/ledger /root/solana/ledger
-# chown -R root:root /mnt /var/log/dancer
 chmod -R 777 /mnt /var/log/dancer /root/solana
+# for mainnet
+# curl https://raw.githubusercontent.com/Vahhhh/solana/main/firedancer/config_main.toml > /root/solana/config.toml
 curl https://raw.githubusercontent.com/Vahhhh/solana/main/firedancer/config.toml > /root/solana/config.toml
 curl https://raw.githubusercontent.com/Hohlas/solana/main/firedancer/solana.service > /root/solana/solana.service
 ln -sf /root/solana/solana.service /etc/systemd/system
