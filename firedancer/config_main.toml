@@ -1,0 +1,68 @@
+user = "root"
+dynamic_port_range = "8004-8020"
+
+[gossip]
+    entrypoints = [
+        "entrypoint.testnet.solana.com:8001",
+        "entrypoint2.testnet.solana.com:8001",
+        "entrypoint3.testnet.solana.com:8001",
+    ]
+
+[consensus]
+    expected_genesis_hash = "4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY"
+    known_validators = [
+        "5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on", 
+        "dDzy5SR3AXdYWVqbDEkVFdvSPCtS9ihF5kJkHCtXoFs",
+        "Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN",
+        "eoKpUABi59aT4rR9HGS3LcMecfut9x7zJyodWWP43YQ",
+        "9QxCLckBiJc783jnMvXZubK4wH86Eqqvashtrwvcsgkv",
+    ]
+	authorized_voter_paths = ["/root/solana/validator-keypair.json"]
+ 	# identity_path = "/root/solana/unstaked-identity.json"
+  	identity_path = "/root/solana/validator-keypair.json"
+	vote_account_path = "/root/solana/vote-account-keypair.json"
+
+[rpc]
+    port = 8899
+    full_api = true
+    private = true
+
+[layout]
+	affinity = "auto"
+	agave_affinity = "auto"
+	verify_tile_count = 1
+	bank_tile_count = 1
+	shred_tile_count = 2
+
+[reporting]
+    solana_metrics_config = "host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
+
+[ledger]
+    path = "/mnt/ledger"
+    accounts_path = "/mnt/accounts"
+    limit_size = 50000000
+	
+[snapshots]
+	enabled = false
+ 	path = "/mnt/snapshots"
+ 	#minimum_snapshot_download_speed = 41943040
+	#full_snapshot_interval_slots = 25000
+	#incremental_snapshot_interval_slots = 6250
+	#maximum_full_snapshots_to_retain = 1
+	#maximum_incremental_snapshots_to_retain = 1
+
+[log]
+    path = "/var/log/dancer/solana.log"
+
+[tiles.gui]
+    enabled = true
+    gui_listen_address = "0.0.0.0"
+    gui_listen_port = 80
+
+[tiles.bundle]
+    enabled = true
+    url = "https://ny.mainnet.block-engine.jito.wtf"
+    tip_distribution_program_addr = "4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7"
+    tip_payment_program_addr = "T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt"
+    tip_distribution_authority = "GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib"
+    commission_bps = 990
