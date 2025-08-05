@@ -23,6 +23,7 @@ chmod -R 777 /mnt /var/log/dancer /root/solana
 # for mainnet
 # curl https://raw.githubusercontent.com/Vahhhh/solana/main/firedancer/config_main.toml > /root/solana/config.toml
 curl https://raw.githubusercontent.com/Vahhhh/solana/main/firedancer/config.toml > /root/solana/config.toml
+cp /root/solana/solana.service /root/solana/solana_agave.service
 curl https://raw.githubusercontent.com/Hohlas/solana/main/firedancer/solana.service > /root/solana/solana.service
 ln -sf /root/solana/solana.service /etc/systemd/system
 systemctl daemon-reload
@@ -35,7 +36,7 @@ rm -r firedancer
 git clone --recurse-submodules https://github.com/firedancer-io/firedancer.git
 ```
 ```bash
-DANCE_VER="v0.603.20216"
+DANCE_VER="v0.606.20216"
 ```
 ```bash
 cd ~/firedancer
