@@ -36,14 +36,14 @@ rm -r firedancer
 git clone --recurse-submodules https://github.com/firedancer-io/firedancer.git
 ```
 ```bash
-DANCE_VER="v0.606.20216"
+DANCE_VER="v0.703.20300"
 ```
 ```bash
-cd ~/firedancer
-git fetch
+cd ~/firedancer && git pull
 git checkout $DANCE_VER
-git submodule update
-./deps.sh # install libraries/dependencies
+git submodule update --init --recursive
+make clean
+bash deps.sh
 ```
 ```bash
 # make root
