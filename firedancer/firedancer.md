@@ -36,7 +36,7 @@ rm -r firedancer
 git clone --recurse-submodules https://github.com/firedancer-io/firedancer.git
 ```
 ```bash
-DANCE_VER="v0.703.20300"
+DANCE_VER="v0.707.20306"
 ```
 ```bash
 cd ~/firedancer && git pull
