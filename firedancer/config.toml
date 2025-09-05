@@ -1,5 +1,5 @@
 user = "root"
-dynamic_port_range = "8004-8020"
+dynamic_port_range = "8004-8030"
 
 [gossip]
     entrypoints = [
