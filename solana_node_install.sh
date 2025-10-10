@@ -235,7 +235,6 @@ Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainn
 ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
 ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
 ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
-#--no-skip-initial-accounts-db-clean \
 --block-verification-method unified-scheduler \
 --entrypoint entrypoint.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
@@ -373,8 +372,6 @@ Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainn
 ExecStartPre=/usr/bin/ln -sf /root/solana/unstaked-identity.json /root/solana/identity.json
 ExecStartPost=bash -c "/root/solana/post_restart_solana.sh &"
 ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
-#--no-skip-initial-accounts-db-clean \
---block-verification-method unified-scheduler \
 --identity /root/solana/identity.json \
 --vote-account /root/solana/vote-account-keypair.json \
 --authorized-voter /root/solana/validator-keypair.json \
@@ -412,9 +409,6 @@ ExecStart=/root/.local/share/solana/install/active_release/bin/agave-validator \
 --tip-distribution-program-pubkey 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7 \
 --merkle-root-upload-authority GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib \
 --commission-bps 900 \
---account-index program-id \
---account-index-include-key AddressLookupTab1e1111111111111111111111111 \
-#--relayer-url http://127.0.0.1:11226 \
 --relayer-url http://amsterdam.mainnet.relayer.jito.wtf:8100 \
 --block-engine-url https://amsterdam.mainnet.block-engine.jito.wtf \
 --shred-receiver-address 74.118.140.240:1002
@@ -504,7 +498,7 @@ printf '# Input Plugins
     ignore_fs = ["devtmpfs", "devfs"]
 #[[inputs.io]]
 [[inputs.mem]]
-[[inputs.net]]
+#[[inputs.net]]
 [[inputs.system]]
 [[inputs.swap]]
 [[inputs.netstat]]
