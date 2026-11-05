@@ -21,8 +21,8 @@ VER_MAINNET="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=mai
 VER_TESTNET="$(wget -q -4 -O- https://api.margus.one/solana/version/?cluster=testnet)"
 SWAP_PATH="/swapfile"
 ACCOUNTS_PATH="/mnt/ramdisk/accounts"
-ACCOUNTS_INDEX_PATH="/mnt/ramdisk/accounts_index"
-ACCOUNTS_HASH_CACHE_PATH="/mnt/ramdisk/accounts_hash_cache"
+#ACCOUNTS_INDEX_PATH="/mnt/ramdisk/accounts_index"
+#ACCOUNTS_HASH_CACHE_PATH="/mnt/ramdisk/accounts_hash_cache"
 LEDGER_PATH="/mnt/ledger"
 SNAPSHOTS_PATH="/mnt/snapshots"
 
@@ -76,17 +76,17 @@ if [ -n "$ACCOUNTS_INPUT" ]; then
 ACCOUNTS_PATH=$ACCOUNTS_INPUT
 fi
 
-printf "${C_LGn}Enter ACCOUNTS_INDEX_PATH full path [$ACCOUNTS_INDEX_PATH]:${RES} "
-read -r ACCOUNTS_INDEX_INPUT
-if [ -n "$ACCOUNTS_INDEX_INPUT" ]; then
-ACCOUNTS_INDEX_PATH=$ACCOUNTS_INDEX_INPUT
-fi
+#printf "${C_LGn}Enter ACCOUNTS_INDEX_PATH full path [$ACCOUNTS_INDEX_PATH]:${RES} "
+#read -r ACCOUNTS_INDEX_INPUT
+#if [ -n "$ACCOUNTS_INDEX_INPUT" ]; then
+#ACCOUNTS_INDEX_PATH=$ACCOUNTS_INDEX_INPUT
+#fi
 
-printf "${C_LGn}Enter ACCOUNTS_HASH_CACHE_PATH full path [$ACCOUNTS_HASH_CACHE_PATH]:${RES} "
-read -r ACCOUNTS_HASH_CACHE_INPUT
-if [ -n "$ACCOUNTS_HASH_CACHE_INPUT" ]; then
-ACCOUNTS_HASH_CACHE_PATH=$ACCOUNTS_HASH_CACHE_INPUT
-fi
+#printf "${C_LGn}Enter ACCOUNTS_HASH_CACHE_PATH full path [$ACCOUNTS_HASH_CACHE_PATH]:${RES} "
+#read -r ACCOUNTS_HASH_CACHE_INPUT
+#if [ -n "$ACCOUNTS_HASH_CACHE_INPUT" ]; then
+#ACCOUNTS_HASH_CACHE_PATH=$ACCOUNTS_HASH_CACHE_INPUT
+#fi
 
 printf "${C_LGn}Enter LEDGER full path [$LEDGER_PATH]:${RES} "
 read -r LEDGER_INPUT
